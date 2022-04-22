@@ -4,12 +4,14 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "build": "next build",
     "preview": "next build && next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.2",
+    "decanter": "https://github.com/SU-SWS/decanter#ADAPT-4155-alt",
     "next": "^12.1.4",
     "next-drupal": "^1.2.1",
     "react": "^17.0.2",

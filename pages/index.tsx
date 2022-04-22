@@ -1,61 +1,45 @@
 import Head from "next/head"
-import { GetStaticPropsResult } from "next"
-import { DrupalNode, getResourceCollectionFromContext } from "next-drupal"
+import {GetStaticPropsResult} from "next"
+import {DrupalMenuLinkContent, DrupalNode, getMenu, getResource} from "next-drupal"
 
-import { NodeArticleTeaser } from "@/components/node-article"
-import { Layout } from "@/components/layout"
+import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
+import {MainLayout} from "@/components/layouts/main-layout"
 
-interface IndexPageProps {
-  nodes: DrupalNode[]
+interface HomePageProps {
+  node: DrupalNode,
+  menu: DrupalMenuLinkContent[]
 }
 
-export default function IndexPage({ nodes }: IndexPageProps) {
+const HomePage = ({node, menu}: HomePageProps) => {
   return (
-    <Layout>
+    <MainLayout menu={menu}>
       <Head>
-        <title>Next.js for Drupal</title>
+        <title>Demo Site</title>
         <meta
           name="description"
-          content="A Next.js site powered by a Drupal backend."
+          content="Demo Site."
         />
       </Head>
       <div>
-        <h1 className="mb-10 text-6xl font-black">Latest Articles.</h1>
-
-        {nodes?.length ? (
-          nodes.map((node) => (
-            <div key={node.id}>
-              <NodeArticleTeaser node={node} />
-              <hr className="my-20" />
-            </div>
-          ))
-        ) : (
-          <p className="py-4">No nodes found</p>
-        )}
+        <NodeStanfordPage node={node}/>
       </div>
-    </Layout>
+    </MainLayout>
   )
 }
 
-export async function getStaticProps(
-  context
-): Promise<GetStaticPropsResult<IndexPageProps>> {
-  const nodes = await getResourceCollectionFromContext<DrupalNode[]>(
-    "node--article",
-    context,
-    {
-      params: {
-        "filter[status]": 1,
-        include: "field_image,uid",
-        sort: "-created",
-      },
-    }
-  )
+export default HomePage;
 
+export async function getStaticProps(): Promise<GetStaticPropsResult<HomePageProps>> {
+  const node = await getResource<DrupalNode>(
+    "node--stanford_page",
+    '72f0069b-f1ec-4122-af73-6aa841faea90'
+  )
+  const {tree} = await getMenu('main');
   return {
     props: {
-      nodes,
+      node,
+      menu: tree
     },
-    revalidate: 10,
+    revalidate: 60,
   }
 }

@@ -4,11 +4,13 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
+  presets: [
+    require('decanter')
+  ],
   theme: {
     extend: {},
   },
   variants: {
     extend: {},
-  },
-  plugins: [require("@tailwindcss/typography")],
+  }
 }
