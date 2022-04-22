@@ -1,10 +1,15 @@
-import Image from "next/image"
 import Link from "next/link"
 
-export const NodeStanfordPage = ({node, ...props}) => {
+import {Banner} from "@/components/paragraphs/banner";
+import {Row} from "@/components/paragraphs/row";
+
+export const NodeStanfordPage = ({node, homepage, ...props}) => {
+
   return (
     <article {...props}>
-      <h1>{node.title}</h1>
+      {!homepage && <h1>{node.title}</h1>}
+      {node.su_page_banner && <Banner {...node.su_page_banner}/>}
+      {node.su_page_components && <Row rows={node.su_page_components}/>}
     </article>
   )
 }

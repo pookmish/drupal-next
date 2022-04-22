@@ -21,7 +21,7 @@ const HomePage = ({node, menu}: HomePageProps) => {
         />
       </Head>
       <div>
-        <NodeStanfordPage node={node}/>
+        <NodeStanfordPage node={node} homepage/>
       </div>
     </MainLayout>
   )
@@ -30,9 +30,14 @@ const HomePage = ({node, menu}: HomePageProps) => {
 export default HomePage;
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<HomePageProps>> {
+  const params = {
+    include: "su_page_components,su_page_banner,su_page_image,su_page_components.su_page_components",
+  }
+
   const node = await getResource<DrupalNode>(
     "node--stanford_page",
-    '72f0069b-f1ec-4122-af73-6aa841faea90'
+    '72f0069b-f1ec-4122-af73-6aa841faea90',
+    {params}
   )
   const {tree} = await getMenu('main');
   return {

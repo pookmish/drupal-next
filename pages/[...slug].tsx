@@ -23,7 +23,6 @@ interface NodePageProps {
 
 export default function NodePage({node, menu}: NodePageProps) {
   if (!node) return null
-
   return (
     <MainLayout menu={menu}>
       <Head>
@@ -74,6 +73,11 @@ export async function getStaticProps(
   const type = path.jsonapi.resourceName
 
   let params = {}
+  if (type === "node--stanford_page") {
+    params = {
+      include: "su_page_components,su_page_banner,su_page_image,su_page_components.su_page_components",
+    }
+  }
   const node = await getResourceFromContext<DrupalNode>(type, context, {
     params,
   })
