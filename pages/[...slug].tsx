@@ -75,7 +75,13 @@ export async function getStaticProps(
 
   const params = new DrupalJsonApiParams();
   if (type === "node--stanford_page") {
-    params.addInclude(['su_page_components', 'su_page_banner', 'su_page_image', 'su_page_components.su_page_components']);
+    params.addInclude([
+      'su_page_components',
+      'su_page_banner',
+      'su_page_image',
+      'su_page_components.su_page_components',
+      'layout_selection'
+    ]);
   }
 
   const node = await getResourceFromContext<DrupalNode>(type, context, {params: params.getQueryObject()})

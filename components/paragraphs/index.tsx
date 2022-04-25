@@ -12,13 +12,13 @@ export const Paragraphs = ({components, ...props}) => {
   const fullWidthComponents = [
     'paragraph--stanford_banner'
   ];
-  const restrictWidth = components && components.length === 1 && fullWidthComponents.indexOf(components[0].type) < 0;
+  const widthClass = components && components.length === 1 && fullWidthComponents.indexOf(components[0].type) < 0?'su-cc su-max-w-screen-2xl' : '';
 
   return (
     <div
-      className={"su-flex su-flex-col md:su-flex-row su-flex-grow-0 su-flex-shrink-0 " + (restrictWidth ? 'su-cc su-max-w-screen-2xl' : '')} {...props}>
+      className={`su-grid su-gap-xl su-grid-cols-${components.length} ${widthClass}`} {...props}>
       {components.map(component => (
-        <div key={component.id} className="su-flex-1">
+        <div key={component.id} className="">
           {component.type === 'paragraph--stanford_card' && <Card {...component}/>}
           {component.type === 'paragraph--stanford_banner' && <Banner {...component}/>}
           {component.type === 'paragraph--stanford_gallery' && <ImageGallery {...component}/>}

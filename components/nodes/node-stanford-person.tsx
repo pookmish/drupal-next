@@ -1,7 +1,4 @@
-import Image from "next/image"
 import Link from "next/link"
-
-import {formatDate} from "@/lib/format-date"
 
 export const NodeStanfordPerson = ({node, ...props}) => {
   return (

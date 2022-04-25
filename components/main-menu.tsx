@@ -1,6 +1,8 @@
 import {DrupalMenuLinkContent} from "next-drupal";
 import {useState} from "react";
 
+import {DrupalLink} from "@/components/simple/link";
+
 interface MainMenuProps {
   tree: DrupalMenuLinkContent[]
 }
@@ -26,12 +28,12 @@ export const MenuItem = ({title, url, items = []}) => {
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <a href={url}>{title}</a>
-      {typeof items === 'object' &&
-          <ul className={'su-z-10 su-shadow-lg su-absolute su-list-unstyled su-bg-white ' + (isHovered ? 'su-block' : 'su-hidden')}>
-            {items.map(item => <MenuItem key={item.id} {...item}/>)}
-          </ul>
-      }
+      <DrupalLink href={url}>{title}</DrupalLink>
+        {typeof items === 'object' &&
+            <ul className={'su-z-10 su-shadow-lg su-absolute su-list-unstyled su-bg-white ' + (isHovered ? 'su-block' : 'su-hidden')}>
+              {items.map(item => <MenuItem key={item.id} {...item}/>)}
+            </ul>
+        }
     </li>
   )
 }
