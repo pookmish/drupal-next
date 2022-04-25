@@ -36,7 +36,7 @@ export const MainLayout = ({menu, children, ...props}) => {
         </header>
         <main className={`su-flex md:su-flex-row ${sideMenu.items ? 'su-cc' : ''}`}>
           {sideMenu.items && <aside className="su-w-1/4"><SideNav tree={sideMenu.items}/></aside>}
-          <section className={`${sideMenu.items ? 'su-w-3/4' : ''}`}>{children}</section>
+          <section className={`${sideMenu.items ? 'su-w-3/4' : 'su-w-full'}`}>{children}</section>
         </main>
         <GlobalFooter/>
       </div>

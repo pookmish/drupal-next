@@ -1,6 +1,6 @@
 import {HTMLReactParserOptions, domToReact} from "html-react-parser"
-import {Element} from "domhandler/lib/node"
 import parse from "html-react-parser"
+import {Element} from "domhandler/lib/node"
 import Image from "next/image"
 
 import {DrupalLink} from "@/components/simple/link";
@@ -28,17 +28,17 @@ const options: HTMLReactParserOptions = {
 
     if (domNode.name === 'p') {
       let {class: className} = domNode.attribs
-      className = className? className.replace('text-align-center', 'su-text-center'):'';
+      className = className ? className.replace('text-align-center', 'su-text-center') : '';
       return <p className={className}>{domToReact(domNode.children, options)}</p>
     }
     if (domNode.name === 'h2') {
       let {class: className} = domNode.attribs
-      className = className? className.replace('text-align-center', 'su-text-center'):'';
+      className = className ? className.replace('text-align-center', 'su-text-center') : '';
       return <h2 className={className}>{domToReact(domNode.children, options)}</h2>
     }
     if (domNode.name === 'h3') {
       let {class: className} = domNode.attribs
-      className = className? className.replace('text-align-center', 'su-text-center'):'';
+      className = className ? className.replace('text-align-center', 'su-text-center') : '';
       return <h3 className={className}>{domToReact(domNode.children, options)}</h3>
     }
 
@@ -54,6 +54,5 @@ const options: HTMLReactParserOptions = {
   },
 }
 
-export function BasicHtml({html}: { html: string }) {
-  return <>{parse(html, options)}</>
-}
+const formatHtml = (html) => parse(html, options);
+export default formatHtml;

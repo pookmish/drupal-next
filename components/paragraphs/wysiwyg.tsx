@@ -1,5 +1,5 @@
-import {BasicHtml} from "@/components/basic-html";
+import formatHtml from "@/lib/format-html"
 
 export function Wysiwyg({ su_wysiwyg_text }: { su_wysiwyg_text: object }) {
-  return <div><BasicHtml html={su_wysiwyg_text.processed}/></div>
+  return <div>{formatHtml(su_wysiwyg_text.processed)}</div>
 }
