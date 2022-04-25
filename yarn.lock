@@ -602,6 +602,13 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+drupal-jsonapi-params@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/drupal-jsonapi-params/-/drupal-jsonapi-params-2.0.0.tgz#44432aa92fb031c148194bbf079a20ee3a4d088f"
+  integrity sha512-b6626S6r5YxyHNtVx/9X/oWOQjXwJi00AwTsIB8P7H9MU7CmgURE8zrAVrUWWoEHKTU1u2SWYDv2UZBnvf/P+Q==
+  dependencies:
+    qs "^6.10.3"
+
 electron-to-chromium@^1.4.84:
   version "1.4.111"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.111.tgz#897613f6504f3f17c9381c7499a635b413e4df4e"
@@ -1693,6 +1700,13 @@ qs@^6.10.1:
   version "6.10.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.2.tgz#c1431bea37fc5b24c5bdbafa20f16bdf2a4b9ffe"
   integrity sha512-mSIdjzqznWgfd4pMii7sHtaYF8rx8861hBO80SraY5GT0XQibWZWJSid0avzHGkDIZLImux2S5mXO0Hfct2QCw==
+  dependencies:
+    side-channel "^1.0.4"
+
+qs@^6.10.3:
+  version "6.10.3"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.3.tgz#d6cde1b2ffca87b5aa57889816c5f81535e22e8e"
+  integrity sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==
   dependencies:
     side-channel "^1.0.4"
 

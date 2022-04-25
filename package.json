@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.2",
     "decanter": "https://github.com/SU-SWS/decanter#ADAPT-4155-alt",
+    "drupal-jsonapi-params": "^2.0.0",
     "next": "^12.1.4",
     "next-drupal": "^1.2.1",
     "react": "^17.0.2",

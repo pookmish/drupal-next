@@ -44,7 +44,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomePagePro
     props: {
       node,
       menu: tree
-    },
-    revalidate: 60,
+    }
   }
 }

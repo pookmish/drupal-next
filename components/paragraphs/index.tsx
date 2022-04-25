@@ -8,8 +8,15 @@ export const Paragraphs = ({components, ...props}) => {
   if (typeof components === 'undefined') {
     return null;
   }
+
+  const fullWidthComponents = [
+    'paragraph--stanford_banner'
+  ];
+  const restrictWidth = components && components.length === 1 && fullWidthComponents.indexOf(components[0].type) < 0;
+
   return (
-    <div className="su-flex su-flex-col md:su-flex-row su-flex-grow-0 su-flex-shrink-0" {...props}>
+    <div
+      className={"su-flex su-flex-col md:su-flex-row su-flex-grow-0 su-flex-shrink-0 " + (restrictWidth ? 'su-cc su-max-w-screen-2xl' : '')} {...props}>
       {components.map(component => (
         <div key={component.id} className="su-flex-1">
           {component.type === 'paragraph--stanford_card' && <Card {...component}/>}

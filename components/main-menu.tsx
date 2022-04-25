@@ -12,30 +12,23 @@ export const MainMenu = ({tree}: MainMenuProps) => {
   return (
     <div className="su-cc">
       <ul className="su-list-unstyled su-flex">
-        {tree.map(item => <MenuItem key={item.id} {...item} depth={1}/>)}
+        {tree.map(item => <MenuItem key={item.id} {...item}/>)}
       </ul>
     </div>
   )
 }
 
-export const MenuItems = ({items}, props) => {
-  return (
-    <ul {...props}>
-      {items.map(item => <MenuItem key={item.id} {...item}/>)}
-    </ul>
-  )
-}
-
-export const MenuItem = ({title, url, items}) => {
+export const MenuItem = ({title, url, items = []}) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <li
+      className="su-p-10"
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <a href={url}>{title}</a>
       {typeof items === 'object' &&
-          <ul className={'su-absolute su-list-unstyled ' + (isHovered ? 'su-block' : 'su-hidden')}>
+          <ul className={'su-z-10 su-shadow-lg su-absolute su-list-unstyled su-bg-white ' + (isHovered ? 'su-block' : 'su-hidden')}>
             {items.map(item => <MenuItem key={item.id} {...item}/>)}
           </ul>
       }

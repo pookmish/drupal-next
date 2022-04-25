@@ -4,7 +4,7 @@ import {IdentityBar} from "@/components/identity-bar";
 import {Lockup} from "@/components/lockup";
 import {MainMenu} from "@/components/main-menu";
 
-export const MainLayout = ({menu, children}) => {
+export const MainLayout = ({menu, children, ...props}) => {
   return (
     <>
       <PreviewAlert/>

@@ -1,6 +1,7 @@
 import * as React from "react"
-import {GetStaticPathsResult, GetStaticPropsResult} from "next"
 import Head from "next/head"
+import {GetStaticPathsResult, GetStaticPropsResult} from "next"
+import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {
   DrupalMenuLinkContent,
   DrupalNode, getMenu,
@@ -9,7 +10,7 @@ import {
   translatePathFromContext,
 } from "next-drupal"
 
-import {MainLayout} from "@/components/layouts/main-layout"
+import {MainLayout} from "@/components/layouts/main-layout";
 import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
 import {NodeStanfordNews} from "@/nodes/node-stanford-news";
 import {NodeStanfordEvent} from "@/nodes/node-stanford-event";
@@ -61,7 +62,7 @@ export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
 export async function getStaticProps(
   context
 ): Promise<GetStaticPropsResult<NodePageProps>> {
-  const path = await translatePathFromContext(context)
+  const path = await translatePathFromContext(context);
   const {tree} = await getMenu('main');
 
   if (!path) {
@@ -72,15 +73,12 @@ export async function getStaticProps(
 
   const type = path.jsonapi.resourceName
 
-  let params = {}
+  const params = new DrupalJsonApiParams();
   if (type === "node--stanford_page") {
-    params = {
-      include: "su_page_components,su_page_banner,su_page_image,su_page_components.su_page_components",
-    }
+    params.addInclude(['su_page_components', 'su_page_banner', 'su_page_image', 'su_page_components.su_page_components']);
   }
-  const node = await getResourceFromContext<DrupalNode>(type, context, {
-    params,
-  })
+
+  const node = await getResourceFromContext<DrupalNode>(type, context, {params: params.getQueryObject()})
 
   // At this point, we know the path exists and it points to a resource.
   // If we receive an error, it means something went wrong on the Drupal.
@@ -102,7 +100,6 @@ export async function getStaticProps(
     props: {
       node,
       menu: tree
-    },
-    revalidate: 900,
+    }
   }
 }

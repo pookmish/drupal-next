@@ -40,7 +40,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<CoursesPage
     props: {
       courses,
       menu: tree
-    },
-    revalidate: 900,
+    }
   }
 }

@@ -1,5 +1,5 @@
 export const Banner = ({su_banner_body, su_banner_button, su_banner_header, su_banner_image, su_banner_sup_header}) => {
-  console.log(su_banner_image);
+
   return (
     <div className="hero su-basefont-23 su-relative su-h-full su-max-h-500">
       <div className="su-h-full su-w-full su-overflow-hidden su-relative su-max-h-500">

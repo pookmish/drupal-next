@@ -9,6 +9,7 @@ export const NodeStanfordEvent = ({node, ...props}) => {
 }
 
 export const NodeStanfordEventListItem = ({node, ...props}) => {
+  const startTime = new Date(node.su_event_date_time.value);
   return (
     <article {...props}>
       <Link href={node.path.alias} passHref>
@@ -16,6 +17,7 @@ export const NodeStanfordEventListItem = ({node, ...props}) => {
           <h2>{node.title}</h2>
         </a>
       </Link>
+      <div>{startTime.toLocaleString()}</div>
     </article>
   )
 }
