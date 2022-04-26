@@ -1,5 +1,5 @@
 import * as React from "react"
-import {GetServerSidePropsResult} from "next"
+import {GetStaticPropsResult} from "next"
 import Head from "next/head"
 import {DrupalJsonApiParams} from "drupal-jsonapi-params"
 import {
@@ -8,7 +8,6 @@ import {
   getMenu,
   getResourceCollection,
 } from "next-drupal"
-
 
 import {MainLayout} from "@/components/layouts/main-layout"
 import {NodeStanfordEventListItem} from "@/nodes/node-stanford-event";
@@ -19,7 +18,6 @@ interface EventPageProps {
 }
 
 export default function Events({events, menu}: EventPageProps) {
-  console.log(events);
   return (
     <MainLayout menu={menu}>
       <Head>
@@ -36,7 +34,7 @@ export default function Events({events, menu}: EventPageProps) {
   )
 }
 
-export async function getServerSideProps(context): Promise<GetServerSidePropsResult<EventPageProps>> {
+export async function getStaticProps(): Promise<GetStaticPropsResult<EventPageProps>> {
   const params = new DrupalJsonApiParams();
   const date = Math.floor(Date.now() / 1000)
   params.addFilter('su_event_date_time.value', `${date}`, '>=')
@@ -48,6 +46,7 @@ export async function getServerSideProps(context): Promise<GetServerSidePropsRes
     props: {
       events,
       menu: tree
-    }
+    },
+    revalidate: 60 * 5
   }
 }

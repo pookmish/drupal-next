@@ -20,7 +20,7 @@ export const Card = ({
             <h3 className="su-leading-display su-font-sans su-font-bold su-type-2 su-mb-03em">{su_card_header}</h3>}
         {su_card_body && <div>{formatHtml(su_card_body.processed)}</div>}
         {su_card_link &&
-            <DrupalLink href={su_card_link.uri}
+            <DrupalLink href={su_card_link.url}
                   className="su-cta-button su-font-regular su-leading-display su-block su-w-fit su-no-underline hover:su-underline focus:su-underline su-group su-transition-colors su-px-26 su-pt-10 su-pb-11 su-text-16 md:su-text-20 su-bg-digital-red hocus:su-bg-archway-dark su-text-white hocus:su-text-white su-border-2 su-border-digital-red su-border-solid hover:su-border-black focus:su-border-black su-rs-mt-neg1">
               {su_card_link.title}
             </DrupalLink>

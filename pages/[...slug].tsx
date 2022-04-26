@@ -76,11 +76,9 @@ export async function getStaticProps(
   const params = new DrupalJsonApiParams();
   if (type === "node--stanford_page") {
     params.addInclude([
-      'su_page_components',
-      'su_page_banner',
-      'su_page_image',
-      'su_page_components.su_page_components',
-      'layout_selection'
+      'su_page_banner.su_banner_image.field_media_image',
+      'su_page_image.field_media_image',
+      'su_page_components.su_page_components'
     ]);
   }
 
@@ -106,6 +104,7 @@ export async function getStaticProps(
     props: {
       node,
       menu: tree
-    }
+    },
+    revalidate: 60 * 5
   }
 }
