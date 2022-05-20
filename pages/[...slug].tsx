@@ -1,7 +1,7 @@
 import * as React from "react"
 import Head from "next/head"
 import {GetStaticPathsResult, GetStaticPropsResult} from "next"
-import {DrupalJsonApiParams} from "drupal-jsonapi-params";
+
 import {
   DrupalMenuLinkContent,
   DrupalNode, getMenu,
@@ -16,6 +16,7 @@ import {NodeStanfordNews} from "@/nodes/node-stanford-news";
 import {NodeStanfordEvent} from "@/nodes/node-stanford-event";
 import {NodeStanfordPerson} from "@/nodes/node-stanford-person";
 import {NodeStanfordPublication} from "@/nodes/node-stanford-publication";
+import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
 
 interface NodePageProps {
   node: DrupalNode
@@ -59,9 +60,7 @@ export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
   }
 }
 
-export async function getStaticProps(
-  context
-): Promise<GetStaticPropsResult<NodePageProps>> {
+export async function getStaticProps(context): Promise<GetStaticPropsResult<NodePageProps>> {
   const path = await translatePathFromContext(context);
   const {tree} = await getMenu('main');
 
@@ -72,17 +71,20 @@ export async function getStaticProps(
   }
 
   const type = path.jsonapi.resourceName
+  const node = await getResourceFromContext<DrupalNode>(type, context)
 
-  const params = new DrupalJsonApiParams();
-  if (type === "node--stanford_page") {
-    params.addInclude([
-      'su_page_banner.su_banner_image.field_media_image',
-      'su_page_image.field_media_image',
-      'su_page_components.su_page_components'
-    ]);
+  switch(type){
+    case 'node--stanford_page':
+      const paragraphs = await fetchRowParagraphs(node.su_page_components, 'su_page_components');
+      node?.su_page_components.map((row, i) => {
+        row?.su_page_components.map((component, j) => {
+          node.su_page_components[i].su_page_components[j] = paragraphs.find(paragraph => paragraph.id === component.id)
+        })
+      })
+      break;
+    case '':
+      break;
   }
-
-  const node = await getResourceFromContext<DrupalNode>(type, context, {params: params.getQueryObject()})
 
   // At this point, we know the path exists and it points to a resource.
   // If we receive an error, it means something went wrong on the Drupal.

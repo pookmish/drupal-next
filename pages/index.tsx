@@ -1,10 +1,11 @@
 import Head from "next/head"
 import {GetStaticPropsResult} from "next"
-import {DrupalMenuLinkContent, DrupalNode, getMenu, getResource} from "next-drupal"
+import {DrupalMenuLinkContent, DrupalNode, DrupalParagraph, getMenu, getResource} from "next-drupal"
+import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 
 import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
 import {MainLayout} from "@/components/layouts/main-layout"
-import {DrupalJsonApiParams} from "drupal-jsonapi-params";
+import {fetchParagraphs, fetchRowParagraphs} from "@/lib/fetch-paragraphs";
 
 interface HomePageProps {
   node: DrupalNode,
@@ -12,6 +13,7 @@ interface HomePageProps {
 }
 
 const HomePage = ({node, menu}: HomePageProps) => {
+  // console.log(node);
   return (
     <MainLayout menu={menu}>
       <Head>
@@ -31,18 +33,18 @@ const HomePage = ({node, menu}: HomePageProps) => {
 export default HomePage;
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<HomePageProps>> {
-  const params = new DrupalJsonApiParams();
-  params.addInclude([
-    'su_page_banner.su_banner_image.field_media_image',
-    'su_page_image.field_media_image',
-    'su_page_components.su_page_components'
-  ]);
-
   const node = await getResource<DrupalNode>(
     "node--stanford_page",
-    '72f0069b-f1ec-4122-af73-6aa841faea90',
-    {params: params.getQueryObject()}
+    process.env.DRUPAL_FRONT_PAGE
   )
+
+  const paragraphs = await fetchRowParagraphs(node.su_page_components, 'su_page_components');
+  node?.su_page_components.map((row, i) => {
+    row?.su_page_components.map((component, j) => {
+      node.su_page_components[i].su_page_components[j] = paragraphs.find(paragraph => paragraph.id === component.id)
+    })
+  })
+
   const {tree} = await getMenu('main');
   return {
     props: {

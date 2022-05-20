@@ -9,7 +9,6 @@ export const DrupalImage = ({src, alt, width, height}) => {
       src={imgSrc}
       width={`${width}px`}
       height={`${height}px`}
-      // layout="fill"
       alt={alt}
     />
   )
