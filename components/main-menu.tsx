@@ -1,7 +1,6 @@
 import {DrupalMenuLinkContent} from "next-drupal";
-import {useState} from "react";
-
-import {DrupalLink} from "@/components/simple/link";
+import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
+import Link from "next/link";
 
 interface MainMenuProps {
   tree: DrupalMenuLinkContent[]
@@ -20,20 +19,28 @@ export const MainMenu = ({tree}: MainMenuProps) => {
   )
 }
 
-export const MenuItem = ({title, url, items = []}) => {
-  const [isHovered, setIsHovered] = useState(false);
+export const MenuItem = ({title, url, parentItemProps, items = []}) => {
+  const {buttonProps, itemProps, isOpen} = useDropdownMenu(items.length);
+
   return (
-    <li
-      className="su-p-10"
-      onMouseOver={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <DrupalLink href={url}>{title}</DrupalLink>
-        {typeof items === 'object' &&
-            <ul className={'su-z-10 su-shadow-lg su-absolute su-list-unstyled su-bg-white ' + (isHovered ? 'su-block' : 'su-hidden')}>
-              {items.map(item => <MenuItem key={item.id} {...item}/>)}
-            </ul>
-        }
+    <li className="su-p-10">
+      <Link href={url} passHref>
+        <a href={url} {...parentItemProps}>
+          {title}
+        </a>
+      </Link>
+
+      {items.length > 0 &&
+          <>
+              <button {...buttonProps}>+<span className="su-sr-only">{isOpen ? 'Close' : 'Open'} "{title}" submenu</span></button>
+              <ul
+                  className={'su-z-10 su-shadow-lg su-absolute su-list-unstyled su-bg-white ' + (isOpen ? '' : 'su-hidden')}
+                  role="menu"
+              >
+                {items.map((item, i) => <MenuItem key={item.id} {...item} parentItemProps={itemProps[i]}/>)}
+              </ul>
+          </>
+      }
     </li>
   )
 }

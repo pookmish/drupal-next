@@ -11,12 +11,13 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.2",
-    "decanter": "https://github.com/SU-SWS/decanter#ADAPT-4155-alt",
+    "decanter": "latest",
     "drupal-jsonapi-params": "^2.0.0",
     "html-react-parser": "^1.4.12",
     "next": "^12.1.4",
     "next-drupal": "^1.2.1",
     "react": "^17.0.2",
+    "react-accessible-dropdown-menu-hook": "^3.2.0",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
