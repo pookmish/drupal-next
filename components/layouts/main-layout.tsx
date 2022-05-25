@@ -6,7 +6,7 @@ import {MainMenu} from "@/components/main-menu";
 import {SideNav} from "@/components/side-nav";
 import {useRouter} from "next/router";
 
-export const MainLayout = ({menu, children, ...props}) => {
+export const MainLayout = ({menu, localFooter, globalFooter, lockupSettings, basicSiteSettings, children, ...props}) => {
 
   const router = useRouter()
 

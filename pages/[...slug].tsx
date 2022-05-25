@@ -1,14 +1,7 @@
 import * as React from "react"
 import Head from "next/head"
 import {GetStaticPathsResult, GetStaticPropsResult} from "next"
-
-import {
-  DrupalMenuLinkContent,
-  DrupalNode, getMenu,
-  getPathsFromContext,
-  getResourceFromContext,
-  translatePathFromContext,
-} from "next-drupal"
+import {DrupalNode, getPathsFromContext, getResourceFromContext, translatePathFromContext} from "next-drupal"
 
 import {MainLayout} from "@/components/layouts/main-layout";
 import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
@@ -20,13 +13,12 @@ import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
 
 interface NodePageProps {
   node: DrupalNode
-  menu: DrupalMenuLinkContent[]
 }
 
-export default function NodePage({node, menu}: NodePageProps) {
+export default function NodePage({node, globalSettings}: NodePageProps) {
   if (!node) return null
   return (
-    <MainLayout menu={menu}>
+    <MainLayout {...globalSettings}>
       <Head>
         <title>{node.title}</title>
         <meta
@@ -62,7 +54,6 @@ export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
 
 export async function getStaticProps(context): Promise<GetStaticPropsResult<NodePageProps>> {
   const path = await translatePathFromContext(context);
-  const {tree} = await getMenu('main');
 
   if (!path) {
     return {
@@ -73,7 +64,7 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   const type = path.jsonapi.resourceName
   const node = await getResourceFromContext<DrupalNode>(type, context)
 
-  switch(type){
+  switch (type) {
     case 'node--stanford_page':
       const paragraphs = await fetchRowParagraphs(node.su_page_components, 'su_page_components');
       node?.su_page_components.map((row, i) => {
@@ -103,10 +94,7 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   }
 
   return {
-    props: {
-      node,
-      menu: tree
-    },
+    props: {node},
     revalidate: 60 * 5
   }
 }

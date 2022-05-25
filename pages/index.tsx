@@ -1,23 +1,20 @@
 import Head from "next/head"
 import {GetStaticPropsResult} from "next"
-import {DrupalMenuLinkContent, DrupalNode, DrupalParagraph, getMenu, getResource} from "next-drupal"
-import {DrupalJsonApiParams} from "drupal-jsonapi-params";
+import {DrupalNode, getResource} from "next-drupal"
 
 import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
 import {MainLayout} from "@/components/layouts/main-layout"
-import {fetchParagraphs, fetchRowParagraphs} from "@/lib/fetch-paragraphs";
+import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
 
 interface HomePageProps {
-  node: DrupalNode,
-  menu: DrupalMenuLinkContent[]
+  node: DrupalNode
 }
 
-const HomePage = ({node, menu}: HomePageProps) => {
-  // console.log(node);
+const HomePage = ({node, globalSettings}: HomePageProps) => {
   return (
-    <MainLayout menu={menu}>
+    <MainLayout {...globalSettings}>
       <Head>
-        <title>Demo Site</title>
+        <title>{node.title}</title>
         <meta
           name="description"
           content="Demo Site."
@@ -45,12 +42,8 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomePagePro
     })
   })
 
-  const {tree} = await getMenu('main');
   return {
-    props: {
-      node,
-      menu: tree
-    },
+    props: {node},
     revalidate: 60 * 5
   }
 }
