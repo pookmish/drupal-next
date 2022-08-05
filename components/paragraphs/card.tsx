@@ -2,6 +2,7 @@ import {DrupalLink} from "@/components/simple/link";
 
 import formatHtml from "@/lib/format-html";
 import {DrupalImage} from "@/components/simple/image";
+import {Oembed} from "@/components/simple/oembed";
 
 export const Card = ({
                        su_card_body = null,
@@ -12,12 +13,15 @@ export const Card = ({
                        su_card_super_header = null
                      }) => {
 
-  const imageUrl = su_card_media?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
+  const mediaName = su_card_media?.name;
+  const videoUrl = su_card_media?.field_media_oembed_video;
+  const imageUrl = su_card_media?.field_media_image?.uri?.url;
+
   return (
     <div
-      className="card su-block su-max-w-600 su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow">
+      className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow">
       {imageUrl &&
-          <div className="su-aspect-w-2 su-aspect-h-1" aria-hidden="true">
+          <div aria-hidden="true">
               <DrupalImage
                   className="su-object-cover"
                   src={imageUrl}
@@ -27,6 +31,8 @@ export const Card = ({
               />
           </div>
       }
+
+      {videoUrl && <Oembed className="su-object-cover" src={videoUrl} title={mediaName}/>}
 
       <div className="su-flex su-flex-col card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4">
         {su_card_super_header &&

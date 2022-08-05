@@ -28,7 +28,7 @@ export default function NodePage({node, menu}: NodePageProps) {
 
   return (<>
       <Head>
-        <title>{node.title}</title>
+        <title>{node.title} | {process.env.NEXT_SITE_NAME}</title>
         <meta
           name="description"
           content="A Next.js site powered by a Drupal backend."
@@ -68,6 +68,17 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   if (!path) {
     return {
       notFound: true
+    }
+  }
+
+  // Check for redirect.
+  if (path.redirect?.length) {
+    const [redirect] = path.redirect
+    return {
+      redirect: {
+        destination: redirect.to,
+        permanent: redirect.status === "301",
+      },
     }
   }
 

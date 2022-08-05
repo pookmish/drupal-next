@@ -1,3 +1,4 @@
+
 import {Wysiwyg} from "@/components/paragraphs/wysiwyg";
 import {Card} from "@/components/paragraphs/card";
 import {Banner} from "@/components/paragraphs/banner";
@@ -12,14 +13,13 @@ export const Paragraphs = ({components, ...props}) => {
   const fullWidthComponents = [
     'paragraph--stanford_banner'
   ];
-  const widthClass = components && components.length === 1 && fullWidthComponents.indexOf(components[0].type) < 0?'su-cc su-max-w-screen-2xl' : '';
 
   return (
     <div
-      className={`su-grid su-gap-xl su-grid-cols-${components.length} ${widthClass}`} {...props}>
+      className={`su-grid su-gap-x-xl su-grid-cols-${components.length}`} {...props}>
       {components.map(component => (
-        <div key={component.id} className="">
-          {component.type === 'paragraph--stanford_card' && <Card {...component}/>}
+        <div key={component.id}>
+          {component.type === 'paragraph--stanford_card' && <Card {...component} />}
           {component.type === 'paragraph--stanford_banner' && <Banner {...component}/>}
           {component.type === 'paragraph--stanford_gallery' && <ImageGallery {...component}/>}
           {component.type === 'paragraph--stanford_media_caption' && <MediaCaption {...component}/>}

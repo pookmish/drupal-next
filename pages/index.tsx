@@ -15,7 +15,7 @@ const HomePage = ({node, menu}: HomePageProps) => {
   return (
     <>
       <Head>
-        <title>{node.title}</title>
+        <title>{process.env.NEXT_SITE_NAME}</title>
         <meta
           name="description"
           content="Demo Site."
