@@ -19,7 +19,7 @@ export const MainMenu = ({tree}: MainMenuProps) => {
   )
 }
 
-export const MenuItem = ({title, url, parentItemProps, items = []}) => {
+export const MenuItem = ({title, url, parentItemProps = [], items = []}) => {
   const {buttonProps, itemProps, isOpen} = useDropdownMenu(items.length);
 
   return (

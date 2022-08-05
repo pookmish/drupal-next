@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.2",
-    "decanter": "latest",
+    "decanter": "^7.0.0-rc.2",
     "drupal-jsonapi-params": "^2.0.0",
     "html-react-parser": "^1.4.12",
     "next": "^12.1.4",

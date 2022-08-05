@@ -1,7 +1,7 @@
 import {DrupalImage} from "@/components/simple/image";
 import {Card} from "@/components/paragraphs/card";
 
-export const Banner = ({su_banner_body, su_banner_button, su_banner_header, su_banner_image, su_banner_sup_header, behavior_settings}) => {
+export const Banner = ({su_banner_body= null, su_banner_button= null, su_banner_header= null, su_banner_image= null, su_banner_sup_header= null, behavior_settings= null}) => {
   const imageUrl = su_banner_image?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
   const hasCardText = su_banner_button || su_banner_header || su_banner_sup_header || su_banner_body;
   return (

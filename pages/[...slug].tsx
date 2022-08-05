@@ -1,7 +1,14 @@
 import * as React from "react"
 import Head from "next/head"
 import {GetStaticPathsResult, GetStaticPropsResult} from "next"
-import {DrupalNode, getPathsFromContext, getResourceFromContext, translatePathFromContext} from "next-drupal"
+import {
+  DrupalMenuLinkContent,
+  DrupalNode,
+  getMenu,
+  getPathsFromContext,
+  getResourceFromContext,
+  translatePathFromContext
+} from "next-drupal"
 
 import {MainLayout} from "@/components/layouts/main-layout";
 import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
@@ -13,12 +20,13 @@ import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
 
 interface NodePageProps {
   node: DrupalNode
+  menu: DrupalMenuLinkContent[]
 }
 
-export default function NodePage({node, globalSettings}: NodePageProps) {
+export default function NodePage({node, menu}: NodePageProps) {
   if (!node) return null
-  return (
-    <MainLayout {...globalSettings}>
+
+  return (<>
       <Head>
         <title>{node.title}</title>
         <meta
@@ -26,14 +34,16 @@ export default function NodePage({node, globalSettings}: NodePageProps) {
           content="A Next.js site powered by a Drupal backend."
         />
       </Head>
-      {node.type === "node--stanford_course" && <NodeStanfordPublication node={node}/>}
-      {node.type === "node--stanford_event" && <NodeStanfordEvent node={node}/>}
-      {node.type === "node--stanford_event_series" && <NodeStanfordPublication node={node}/>}
-      {node.type === "node--stanford_news" && <NodeStanfordNews node={node}/>}
-      {node.type === "node--stanford_page" && <NodeStanfordPage node={node}/>}
-      {node.type === "node--stanford_person" && <NodeStanfordPerson node={node}/>}
-      {node.type === "node--stanford_publication" && <NodeStanfordPublication node={node}/>}
-    </MainLayout>
+      <MainLayout menu={menu}>
+        {node.type === "node--stanford_course" && <NodeStanfordPublication node={node}/>}
+        {node.type === "node--stanford_event" && <NodeStanfordEvent node={node}/>}
+        {node.type === "node--stanford_event_series" && <NodeStanfordPublication node={node}/>}
+        {node.type === "node--stanford_news" && <NodeStanfordNews node={node}/>}
+        {node.type === "node--stanford_page" && <NodeStanfordPage node={node}/>}
+        {node.type === "node--stanford_person" && <NodeStanfordPerson node={node}/>}
+        {node.type === "node--stanford_publication" && <NodeStanfordPublication node={node}/>}
+      </MainLayout>
+    </>
   )
 }
 
@@ -63,6 +73,7 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
 
   const type = path.jsonapi.resourceName
   const node = await getResourceFromContext<DrupalNode>(type, context)
+  const {tree} = await getMenu('main');
 
   switch (type) {
     case 'node--stanford_page':
@@ -94,7 +105,10 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   }
 
   return {
-    props: {node},
+    props: {
+      node,
+      menu: tree
+    },
     revalidate: 60 * 5
   }
 }

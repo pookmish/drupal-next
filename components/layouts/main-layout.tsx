@@ -6,7 +6,7 @@ import {MainMenu} from "@/components/main-menu";
 import {SideNav} from "@/components/side-nav";
 import {useRouter} from "next/router";
 
-export const MainLayout = ({menu, localFooter, globalFooter, lockupSettings, basicSiteSettings, children, ...props}) => {
+export const MainLayout = ({menu, ...props}) => {
 
   const router = useRouter()
 
@@ -36,10 +36,11 @@ export const MainLayout = ({menu, localFooter, globalFooter, lockupSettings, bas
         </header>
         <main className={`su-flex md:su-flex-row ${sideMenu.items ? 'su-cc' : ''}`}>
           {sideMenu.items && <aside className="su-w-1/4"><SideNav tree={sideMenu.items}/></aside>}
-          <section className={`${sideMenu.items ? 'su-w-3/4' : 'su-w-full'}`}>{children}</section>
+          <section className={`${sideMenu.items ? 'su-w-3/4' : 'su-w-full'}`}>{props.children}</section>
         </main>
         <GlobalFooter/>
       </div>
     </>
   )
+
 }

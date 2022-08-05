@@ -4,12 +4,12 @@ import formatHtml from "@/lib/format-html";
 import {DrupalImage} from "@/components/simple/image";
 
 export const Card = ({
-                       su_card_body,
-                       su_card_header,
-                       su_card_link,
-                       su_card_link_display,
-                       su_card_media,
-                       su_card_super_header
+                       su_card_body = null,
+                       su_card_header = null,
+                       su_card_link = null,
+                       su_card_link_display = null,
+                       su_card_media = null,
+                       su_card_super_header = null
                      }) => {
 
   const imageUrl = su_card_media?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
