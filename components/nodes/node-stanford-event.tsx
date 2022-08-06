@@ -1,8 +1,13 @@
 import Link from "next/link"
 import {DrupalLink} from "@/components/simple/link";
 import {Paragraphs} from "@/components/paragraphs";
+import {Event} from "../../types/drupal";
 
-export const NodeStanfordEvent = ({node, ...props}) => {
+interface EventNodeProps {
+  node: Event;
+}
+
+export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
 
   return (
     <article {...props}>
@@ -57,7 +62,7 @@ export const NodeStanfordEvent = ({node, ...props}) => {
   )
 }
 
-export const NodeStanfordEventListItem = ({node, ...props}) => {
+export const NodeStanfordEventListItem = ({node, ...props}: EventNodeProps) => {
   const startTime = new Date(node.su_event_date_time.value);
   return (
     <article {...props}>
@@ -72,7 +77,7 @@ export const NodeStanfordEventListItem = ({node, ...props}) => {
 }
 
 
-export const NodeStanfordEventCard = ({node, ...props}) => {
+export const NodeStanfordEventCard = ({node, ...props}: EventNodeProps) => {
   return (
     <article {...props}>
       <Link href={node.path.alias} passHref>

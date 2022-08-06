@@ -17,13 +17,15 @@ import {NodeStanfordEvent} from "@/nodes/node-stanford-event";
 import {NodeStanfordPerson} from "@/nodes/node-stanford-person";
 import {NodeStanfordPublication} from "@/nodes/node-stanford-publication";
 import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
+import {NodeStanfordCourse} from "@/nodes/node-stanford-course";
+import {NodeStanfordEventSeries} from "@/nodes/node-stanford-event-series";
 
 interface NodePageProps {
   node: DrupalNode
   menu: DrupalMenuLinkContent[]
 }
 
-export default function NodePage({node, menu}: NodePageProps) {
+export default function NodePage({node, menu, ...props}: NodePageProps) {
   if (!node) return null
 
   return (<>
@@ -34,10 +36,10 @@ export default function NodePage({node, menu}: NodePageProps) {
           content="A Next.js site powered by a Drupal backend."
         />
       </Head>
-      <MainLayout menu={menu}>
-        {node.type === "node--stanford_course" && <NodeStanfordPublication node={node}/>}
+      <MainLayout menu={menu} {...props}>
+        {node.type === "node--stanford_course" && <NodeStanfordCourse node={node}/>}
         {node.type === "node--stanford_event" && <NodeStanfordEvent node={node}/>}
-        {node.type === "node--stanford_event_series" && <NodeStanfordPublication node={node}/>}
+        {node.type === "node--stanford_event_series" && <NodeStanfordEventSeries node={node}/>}
         {node.type === "node--stanford_news" && <NodeStanfordNews node={node}/>}
         {node.type === "node--stanford_page" && <NodeStanfordPage node={node}/>}
         {node.type === "node--stanford_person" && <NodeStanfordPerson node={node}/>}

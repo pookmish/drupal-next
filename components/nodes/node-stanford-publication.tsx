@@ -1,6 +1,12 @@
 import Link from "next/link"
 
-export const NodeStanfordPublication = ({node, ...props}) => {
+import {Publication} from "../../types/drupal";
+
+interface PublicationNodeProps {
+  node: Publication
+}
+
+export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) => {
   return (
     <article {...props}>
       <h1>{node.title}</h1>
@@ -8,7 +14,7 @@ export const NodeStanfordPublication = ({node, ...props}) => {
   )
 }
 
-export const NodeStanfordPublicationListItem = ({node, ...props}) => {
+export const NodeStanfordPublicationListItem = ({node, ...props}: PublicationNodeProps) => {
   return (
     <article {...props}>
       <Link href={node.path.alias} passHref>
@@ -20,7 +26,7 @@ export const NodeStanfordPublicationListItem = ({node, ...props}) => {
   )
 }
 
-export const NodeStanfordPublicationCard = ({node, ...props}) => {
+export const NodeStanfordPublicationCard = ({node, ...props}: PublicationNodeProps) => {
   return (
     <article {...props}>
       <Link href={node.path.alias} passHref>

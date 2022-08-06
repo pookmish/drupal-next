@@ -1,9 +1,10 @@
 
-import {Wysiwyg} from "@/components/paragraphs/wysiwyg";
-import {Card} from "@/components/paragraphs/card";
-import {Banner} from "@/components/paragraphs/banner";
-import {ImageGallery} from "@/components/paragraphs/image-gallery";
-import {MediaCaption} from "@/components/paragraphs/media-caption";
+import {StanfordWysiwyg} from "@/components/paragraphs/stanford-wysiwyg";
+import {StanfordCard} from "@/components/paragraphs/stanford-card";
+import {StanfordBanner} from "@/components/paragraphs/stanford-banner";
+import {StanfordImageGallery} from "@/components/paragraphs/stanford-image-gallery";
+import {StanfordMediaCaption} from "@/components/paragraphs/stanford-media-caption";
+import {StanfordLists} from "@/components/paragraphs/stanford-lists";
 
 export const Paragraphs = ({components, ...props}) => {
   if (typeof components === 'undefined') {
@@ -19,11 +20,12 @@ export const Paragraphs = ({components, ...props}) => {
       className={`su-grid su-gap-x-xl su-grid-cols-${components.length}`} {...props}>
       {components.map(component => (
         <div key={component.id}>
-          {component.type === 'paragraph--stanford_card' && <Card {...component} />}
-          {component.type === 'paragraph--stanford_banner' && <Banner {...component}/>}
-          {component.type === 'paragraph--stanford_gallery' && <ImageGallery {...component}/>}
-          {component.type === 'paragraph--stanford_media_caption' && <MediaCaption {...component}/>}
-          {component.type === 'paragraph--stanford_wysiwyg' && <Wysiwyg {...component}/>}
+          {component.type === 'paragraph--stanford_card' && <StanfordCard paragraph={component} />}
+          {component.type === 'paragraph--stanford_banner' && <StanfordBanner paragraph={component}/>}
+          {component.type === 'paragraph--stanford_gallery' && <StanfordImageGallery paragraph={component}/>}
+          {component.type === 'paragraph--stanford_media_caption' && <StanfordMediaCaption paragraph={component}/>}
+          {component.type === 'paragraph--stanford_wysiwyg' && <StanfordWysiwyg paragraph={component}/>}
+          {component.type === 'paragraph--stanford_lists' && <StanfordLists paragraph={component}/>}
         </div>
       ))}
     </div>

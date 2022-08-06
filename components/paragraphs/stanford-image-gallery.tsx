@@ -1,20 +1,21 @@
+import {ImageGalleryParagraph} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
 import {DrupalImage} from "@/components/simple/image";
 
-export const ImageGallery = ({
-                               su_gallery_images,
-                               su_gallery_headline = null,
-                               su_gallery_description = null,
-                               su_gallery_button = null
-                             }) => {
+interface StanfordImageGalleryProps {
+  paragraph: ImageGalleryParagraph
+}
+
+export const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) => {
+
   return (
-    <div>
-      {su_gallery_headline && <h2>{su_gallery_headline}</h2>}
-      {su_gallery_description && <div>{formatHtml(su_gallery_description.processed)}</div>}
+    <div {...props}>
+      {paragraph.su_gallery_headline && <h2>{paragraph.su_gallery_headline}</h2>}
+      {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description.processed)}</div>}
       <div className="su-grid su-grid-cols-3 su-gap-xl">
-        {su_gallery_images.map((image, index) =>
-          <figure>
+        {paragraph.su_gallery_images.map((image, index) =>
+          <figure key={index}>
             <DrupalImage
               key={index}
               src={image.su_gallery_image.uri.url}
@@ -26,7 +27,8 @@ export const ImageGallery = ({
           </figure>)}
       </div>
 
-      {su_gallery_button && <DrupalLink href={su_gallery_button.url}>{su_gallery_button.title}</DrupalLink>}
+      {paragraph.su_gallery_button &&
+          <DrupalLink href={paragraph.su_gallery_button.url}>{paragraph.su_gallery_button.title}</DrupalLink>}
     </div>
   )
 }

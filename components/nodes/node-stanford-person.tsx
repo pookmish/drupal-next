@@ -3,9 +3,14 @@ import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
 import {DrupalImage} from "@/components/simple/image";
 import {Paragraphs} from "@/components/paragraphs";
+import {Person} from "../../types/drupal";
 
-export const NodeStanfordPerson = ({node, ...props}) => {
-console.log(node);
+interface PersonNodeProps {
+  node: Person
+}
+
+export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
+
   return (
     <article {...props}>
 
@@ -49,7 +54,7 @@ console.log(node);
   )
 }
 
-export const NodeStanfordPersonListItem = ({node, ...props}) => {
+export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) => {
   return (
     <article {...props}>
       <Link href={node.path.alias} passHref>
@@ -61,7 +66,7 @@ export const NodeStanfordPersonListItem = ({node, ...props}) => {
   )
 }
 
-export const NodeStanfordPersonCard = ({node, ...props}) => {
+export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
   return (
     <article {...props}>
       <Link href={node.path.alias} passHref>

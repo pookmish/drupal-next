@@ -6,12 +6,12 @@ interface MainMenuProps {
   tree: DrupalMenuLinkContent[]
 }
 
-export const MainMenu = ({tree}: MainMenuProps) => {
+export const MainMenu = ({tree, ...props}: MainMenuProps) => {
   if (typeof tree === 'undefined') {
     return null;
   }
   return (
-    <div className="su-cc">
+    <div className="su-cc" {...props}>
       <ul className="su-list-unstyled su-flex">
         {tree.map(item => <MenuItem key={item.id} {...item}/>)}
       </ul>
@@ -19,8 +19,15 @@ export const MainMenu = ({tree}: MainMenuProps) => {
   )
 }
 
-export const MenuItem = ({title, url, parentItemProps = [], items = []}) => {
-  const {buttonProps, itemProps, isOpen} = useDropdownMenu(items.length);
+interface MenuItemProps {
+  title: string,
+  url: string,
+  parentItemProps?: any,
+  items?: DrupalMenuLinkContent[],
+}
+
+export const MenuItem = ({title, url, parentItemProps, items}: MenuItemProps) => {
+  const {buttonProps, itemProps, isOpen} = useDropdownMenu(items?.length);
 
   return (
     <li className="su-p-10">
@@ -30,9 +37,10 @@ export const MenuItem = ({title, url, parentItemProps = [], items = []}) => {
         </a>
       </Link>
 
-      {items.length > 0 &&
+      {items?.length > 0 &&
           <>
-              <button {...buttonProps}>+<span className="su-sr-only">{isOpen ? 'Close' : 'Open'} "{title}" submenu</span></button>
+              <button {...buttonProps}>+<span
+                  className="su-sr-only">{isOpen ? 'Close' : 'Open'} "{title}" submenu</span></button>
               <ul
                   className={'su-z-10 su-shadow-lg su-absolute su-list-unstyled su-bg-white ' + (isOpen ? '' : 'su-hidden')}
                   role="menu"

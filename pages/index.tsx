@@ -11,7 +11,7 @@ interface HomePageProps {
   menu: DrupalMenuLinkContent[],
 }
 
-const HomePage = ({node, menu}: HomePageProps) => {
+const HomePage = ({node, menu, ...props}: HomePageProps) => {
   return (
     <>
       <Head>
@@ -21,7 +21,7 @@ const HomePage = ({node, menu}: HomePageProps) => {
           content="Demo Site."
         />
       </Head>
-      <MainLayout menu={menu}>
+      <MainLayout menu={menu} {...props}>
         <NodeStanfordPage node={node} homepage/>
       </MainLayout>
     </>

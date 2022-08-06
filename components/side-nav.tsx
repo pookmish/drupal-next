@@ -6,25 +6,33 @@ interface MainMenuProps {
   tree: DrupalMenuLinkContent[]
 }
 
-export const SideNav = ({tree}: MainMenuProps) => {
+export const SideNav = ({tree, ...props}: MainMenuProps) => {
   if (typeof tree === 'undefined') {
     return null;
   }
 
   return (
-    <ul className="su-list-unstyled">
+    <ul className="su-list-unstyled" {...props}>
       {tree.map(item => <MenuItem key={item.id} {...item}/>)}
     </ul>
   )
 }
 
-export const MenuItem = ({title, url, items = []}) => {
+interface MenuItemProps {
+  title: string,
+  url: string,
+  parentItemProps?: any,
+  items?: DrupalMenuLinkContent[],
+}
+
+
+export const MenuItem = ({title, url, items, ...props}: MenuItemProps) => {
   return (
-    <li className="su-p-10">
+    <li className="su-p-10" {...props}>
       <DrupalLink href={url}>{title}</DrupalLink>
       {typeof items === 'object' &&
           <ul className="su-list-unstyled">
-            {items.map(item => <MenuItem key={item.id} {...item}/>)}
+            {items?.map(item => <MenuItem key={item.id} {...item}/>)}
           </ul>
       }
     </li>

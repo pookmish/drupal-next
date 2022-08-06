@@ -1,6 +1,11 @@
 import Link from "next/link"
+import {EventSeries} from "../../types/drupal";
 
-export const NodeStanfordEventSeries = ({node, ...props}) => {
+interface EventSeriesNodeProps {
+  node: EventSeries
+}
+
+export const NodeStanfordEventSeries = ({node, ...props}: EventSeriesNodeProps) => {
   return (
     <article {...props}>
       <h1>{node.title}</h1>
@@ -8,7 +13,7 @@ export const NodeStanfordEventSeries = ({node, ...props}) => {
   )
 }
 
-export const NodeStanfordEventSeriesListItem = ({node, ...props}) => {
+export const NodeStanfordEventSeriesListItem = ({node, ...props}: EventSeriesNodeProps) => {
   return (
     <article {...props}>
       <Link href={node.path.alias} passHref>
@@ -20,7 +25,7 @@ export const NodeStanfordEventSeriesListItem = ({node, ...props}) => {
   )
 }
 
-export const NodeStanfordEventSeriesCard = ({node, ...props}) => {
+export const NodeStanfordEventSeriesCard = ({node, ...props}: EventSeriesNodeProps) => {
   return (
     <article {...props}>
       <Link href={node.path.alias} passHref>
