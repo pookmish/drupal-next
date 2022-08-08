@@ -13,7 +13,8 @@ export const StanfordLists = ({paragraph, ...props}: ListProps) => {
       {paragraph.su_list_headline && <h2>{paragraph.su_list_headline}</h2>}
       {paragraph.su_list_description && <div>{formatHtml(paragraph.su_list_description.processed)}</div>}
       <div>List here!</div>
-      {paragraph.su_list_button && <DrupalLink href={paragraph.su_list_button.url}>{paragraph.su_list_button.title}</DrupalLink>}
+      {paragraph.su_list_button &&
+          <DrupalLink href={paragraph.su_list_button.url}>{paragraph.su_list_button.title}</DrupalLink>}
     </div>
   )
 

@@ -1,6 +1,6 @@
 import * as React from "react"
-import Head from "next/head"
 import {GetStaticPathsResult, GetStaticPropsResult} from "next"
+import {NextSeo} from 'next-seo';
 import {
   DrupalMenuLinkContent,
   DrupalNode,
@@ -10,15 +10,9 @@ import {
   translatePathFromContext
 } from "next-drupal"
 
-import {MainLayout} from "@/components/layouts/main-layout";
-import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
-import {NodeStanfordNews} from "@/nodes/node-stanford-news";
-import {NodeStanfordEvent} from "@/nodes/node-stanford-event";
-import {NodeStanfordPerson} from "@/nodes/node-stanford-person";
-import {NodeStanfordPublication} from "@/nodes/node-stanford-publication";
 import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
-import {NodeStanfordCourse} from "@/nodes/node-stanford-course";
-import {NodeStanfordEventSeries} from "@/nodes/node-stanford-event-series";
+import {MainLayout} from "@/components/layouts/main-layout";
+import {Node} from "@/nodes/index";
 
 interface NodePageProps {
   node: DrupalNode
@@ -29,21 +23,11 @@ export default function NodePage({node, menu, ...props}: NodePageProps) {
   if (!node) return null
 
   return (<>
-      <Head>
-        <title>{node.title} | {process.env.NEXT_SITE_NAME}</title>
-        <meta
-          name="description"
-          content="A Next.js site powered by a Drupal backend."
-        />
-      </Head>
+      <NextSeo
+        title={node.title + ' | ' + process.env.NEXT_PUBLIC_SITE_NAME}
+      />
       <MainLayout menu={menu} {...props}>
-        {node.type === "node--stanford_course" && <NodeStanfordCourse node={node}/>}
-        {node.type === "node--stanford_event" && <NodeStanfordEvent node={node}/>}
-        {node.type === "node--stanford_event_series" && <NodeStanfordEventSeries node={node}/>}
-        {node.type === "node--stanford_news" && <NodeStanfordNews node={node}/>}
-        {node.type === "node--stanford_page" && <NodeStanfordPage node={node}/>}
-        {node.type === "node--stanford_person" && <NodeStanfordPerson node={node}/>}
-        {node.type === "node--stanford_publication" && <NodeStanfordPublication node={node}/>}
+        <Node node={node}/>
       </MainLayout>
     </>
   )
@@ -90,10 +74,12 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
 
   switch (type) {
     case 'node--stanford_page':
+
       const paragraphs = await fetchRowParagraphs(node.su_page_components, 'su_page_components');
+
       node?.su_page_components.map((row, i) => {
         row?.su_page_components.map((component, j) => {
-          node.su_page_components[i].su_page_components[j] = paragraphs.find(paragraph => paragraph.id === component.id)
+          node.su_page_components[i].su_page_components[j] = paragraphs.find(paragraph => paragraph.id === component.id);
         })
       })
       break;

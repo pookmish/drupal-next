@@ -13,7 +13,7 @@ export const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGallery
     <div {...props}>
       {paragraph.su_gallery_headline && <h2>{paragraph.su_gallery_headline}</h2>}
       {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description.processed)}</div>}
-      <div className="su-grid su-grid-cols-3 su-gap-xl">
+      <div className="lg:su-grid su-grid-cols-3 su-gap-xl">
         {paragraph.su_gallery_images.map((image, index) =>
           <figure key={index}>
             <DrupalImage
@@ -24,11 +24,15 @@ export const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGallery
               width={image.su_gallery_image.resourceIdObjMeta.width}
             />
             {image.su_gallery_caption && <figcaption>{formatHtml(image.su_gallery_caption)}</figcaption>}
-          </figure>)}
+          </figure>
+        )}
       </div>
 
       {paragraph.su_gallery_button &&
-          <DrupalLink href={paragraph.su_gallery_button.url}>{paragraph.su_gallery_button.title}</DrupalLink>}
+          <DrupalLink href={paragraph.su_gallery_button.url}>
+            {paragraph.su_gallery_button.title}
+          </DrupalLink>
+      }
     </div>
   )
 }

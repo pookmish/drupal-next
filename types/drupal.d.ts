@@ -136,12 +136,19 @@ interface ListParagraph extends DrupalParagraph {
     id: string
     resourceIdObjMeta: {
       display_id: string
-      drupal_internal_target_id: string
+      drupal_internal__target_id: string
       arguments?: string
       items_to_display?: number
     }
   }
   behavior_settings?: object
+}
+
+interface EntityTeaserParagraph extends DrupalParagraph {
+  su_entity_button?: DrupalLink
+  su_entity_description?: DrupalWysiwyg
+  su_entity_headline?: string
+  su_entity_item?: DrupalNode[]
 }
 
 interface MediaCaptionParagraph extends DrupalParagraph {

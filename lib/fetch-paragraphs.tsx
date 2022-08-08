@@ -1,6 +1,6 @@
-import {DrupalParagraph, getResource} from "next-drupal";
+import {DrupalParagraph, getResource, getResourceCollection} from "next-drupal";
 
-export async function fetchParagraphs(components) {
+export async function fetchParagraphs(components: DrupalParagraph[]) {
   const requests = [];
   components.map(component => {
     requests.push(getResource<DrupalParagraph>(
@@ -11,8 +11,7 @@ export async function fetchParagraphs(components) {
   return await Promise.all(requests)
 }
 
-
-export function fetchRowParagraphs(rows, componentField) {
+export function fetchRowParagraphs(rows: DrupalParagraph[], componentField: string) {
   const requests = [];
   rows.map(row => {
     row[componentField].map(component => {
