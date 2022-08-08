@@ -2,7 +2,7 @@ import Link from "next/link"
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
 import {DrupalImage} from "@/components/simple/image";
-import {Paragraphs} from "@/components/paragraphs";
+import {Paragraph} from "@/components/paragraphs";
 import {Person} from "../../types/drupal";
 
 interface PersonNodeProps {
@@ -30,9 +30,9 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
       </div>
       <div className="su-flex">
         <div>
-          {node.su_person_components &&
-              <Paragraphs components={node.su_person_components}/>
-          }
+          {node.su_person_components && node.su_person_components.map(paragraph =>
+            <Paragraph key={paragraph.id} paragraph={paragraph}/>
+          )}
 
 
           {node.su_person_affiliations && node.su_person_affiliations.map((affiliation, index) =>

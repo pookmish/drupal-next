@@ -15,7 +15,7 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
     <article {...props}>
       {!homepage && <h1 className="su-cc su-max-w-screen-2xl">{node.title}</h1>}
       {node.su_page_banner && <StanfordBanner paragraph={node.su_page_banner}/>}
-      {node.su_page_components && <Row rows={node.su_page_components}/>}
+      {node.su_page_components && <Row rows={node.su_page_components} rowField="su_page_components"/>}
     </article>
   )
 }

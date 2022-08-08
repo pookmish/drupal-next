@@ -1,4 +1,3 @@
-
 import {BannerParagraph} from "../../types/drupal";
 import {Banner} from "@/components/patterns/banner";
 
@@ -7,7 +6,7 @@ interface BannerProps {
   fullWidth?: boolean
 }
 
-export const StanfordBanner = ({paragraph, fullWidth, ...props}: BannerProps) => {
+export const StanfordBanner = ({paragraph, siblingCount, ...props}: BannerProps) => {
 
   const imageUrl = paragraph?.su_banner_image?.field_media_image?.uri?.url;
   let image = null
@@ -28,7 +27,7 @@ export const StanfordBanner = ({paragraph, fullWidth, ...props}: BannerProps) =>
       body={paragraph?.su_banner_body?.processed}
       link={paragraph?.su_banner_button}
       overlayPosition={paragraph.behavior_settings?.hero_pattern?.overlay_position}
-      fullWidth={fullWidth}
+      fullWidth={siblingCount === 1}
       {...props}
     />
   )

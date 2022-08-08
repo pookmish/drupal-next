@@ -1,6 +1,6 @@
 import Link from "next/link"
 import {DrupalLink} from "@/components/simple/link";
-import {Paragraphs} from "@/components/paragraphs";
+import {Paragraph} from "@/components/paragraphs";
 import {Event} from "../../types/drupal";
 
 interface EventNodeProps {
@@ -55,9 +55,9 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
           <DrupalLink href={node.su_event_source.url}>{node.su_event_source.title}</DrupalLink>
       }
 
-      {node.su_event_components &&
-          <Paragraphs components={node.su_event_components}/>
-      }
+      {node.su_event_components && node.su_event_components.map(paragraph =>
+        <Paragraph key={paragraph.id} paragraph={paragraph}/>
+      )}
     </article>
   )
 }

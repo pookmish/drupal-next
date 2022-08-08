@@ -1,16 +1,29 @@
-import {Paragraphs} from "@/components/paragraphs";
+import {Paragraph} from "@/components/paragraphs";
 import {DrupalParagraph} from "next-drupal";
 
 interface RowProps {
   rows: DrupalParagraph[]
+  rowField: string
 }
 
-export const Row = ({rows, ...props}: RowProps) => {
+export const Row = ({rows, rowField, ...props}: RowProps) => {
+
+  const gridClasses = {
+    1: 'su-grid-cols-1',
+    2: 'su-grid-cols-2',
+    3: 'su-grid-cols-3',
+    4: 'su-grid-cols-4',
+  }
+
   return (
     <div {...props}>
-      {rows.map(row => (
-        <Paragraphs key={row.id} components={row.su_page_components}/>
-      ))}
+      {rows.map(row =>
+        <div key={row.id} className={`lg:su-grid su-gap-xl ${gridClasses[row[rowField].length]}`}>
+          {row[rowField].map(paragraph =>
+            <Paragraph paragraph={paragraph} key={paragraph.id} siblingCount={row[rowField].length}/>
+          )}
+        </div>
+      )}
     </div>
   )
 }

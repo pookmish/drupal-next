@@ -71,11 +71,12 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   const type = path.jsonapi.resourceName
   const node = await getResourceFromContext<DrupalNode>(type, context)
   const {tree} = await getMenu('main');
+  let paragraphs = null
 
   switch (type) {
     case 'node--stanford_page':
 
-      const paragraphs = await fetchRowParagraphs(node.su_page_components, 'su_page_components');
+      paragraphs = await fetchRowParagraphs(node.su_page_components, 'su_page_components');
 
       node?.su_page_components.map((row, i) => {
         row?.su_page_components.map((component, j) => {
@@ -83,7 +84,16 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
         })
       })
       break;
-    case '':
+
+    case 'node--stanford_publication':
+
+      paragraphs = await fetchRowParagraphs(node.su_publication_components, 'su_pubs_components');
+
+      node?.su_publication_components.map((row, i) => {
+        row?.su_pubs_components.map((component, j) => {
+          node.su_publication_components[i].su_pubs_components[j] = paragraphs.find(paragraph => paragraph.id === component.id);
+        })
+      })
       break;
   }
 

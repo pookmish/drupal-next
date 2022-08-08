@@ -1,7 +1,7 @@
 import Link from "next/link"
 import {News} from "../../types/drupal";
 import {DrupalImage} from "@/components/simple/image";
-import {Paragraphs} from "@/components/paragraphs";
+import {Paragraph} from "@/components/paragraphs";
 
 interface NewsNodeProps {
   node: News
@@ -27,7 +27,10 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
           width={node.su_news_banner.field_media_image.resourceIdObjMeta.width}
       />}
       {node.su_news_banner_media_caption}
-      <Paragraphs components={node.su_news_components}/>
+      {node.su_news_components && node.su_news_components.map(paragraph =>
+        <Paragraph key={paragraph.id} paragraph={paragraph}/>
+      )}
+
     </article>
   )
 }

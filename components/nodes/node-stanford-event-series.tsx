@@ -1,14 +1,21 @@
 import Link from "next/link"
 import {EventSeries} from "../../types/drupal";
+import {Paragraph} from "@/components/paragraphs";
 
 interface EventSeriesNodeProps {
   node: EventSeries
 }
 
 export const NodeStanfordEventSeries = ({node, ...props}: EventSeriesNodeProps) => {
+  console.log(node);
   return (
     <article {...props}>
       <h1>{node.title}</h1>
+      {node.su_event_series_subheadline}
+      {node.su_event_series_dek}
+      {node.su_event_series_components && node.su_event_series_components.map(paragraph =>
+        <Paragraph key={paragraph.id} paragraph={paragraph}/>
+      )}
     </article>
   )
 }

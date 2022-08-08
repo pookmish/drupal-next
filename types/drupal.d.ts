@@ -1,4 +1,5 @@
 import {DrupalFile, DrupalMedia, DrupalNode, DrupalParagraph, DrupalTaxonomyTerm} from "next-drupal";
+import {JsonApiResource} from "next-drupal/src/types";
 
 // Node Types.
 interface BasicPage extends DrupalNode {
@@ -48,16 +49,23 @@ interface Event extends DrupalNode {
 }
 
 interface EventSeries extends DrupalNode {
+  su_event_series_components: DrupalParagraph[]
+  su_event_series_dek: string
+  su_event_series_event: DrupalNode[]
+  su_event_series_subheadline: string
+  su_event_series_type: DrupalTaxonomyTerm[]
+  su_event_series_weight: number
+  su_shared_tags: DrupalTaxonomyTerm[]
 }
 
 interface News extends DrupalNode {
-  su_news_banner_media_caption?: string
-  su_news_publishing_date?: string
   su_news_banner?: DrupalImageMedia
+  su_news_banner_media_caption?: string
   su_news_byline?: string
   su_news_components?: DrupalParagraph[]
   su_news_dek?: string
   su_news_featured_media?: DrupalMedia
+  su_news_publishing_date?: string
   su_news_source?: DrupalLink
   su_news_topics?: DrupalTaxonomyTerm[]
   su_shared_tags?: DrupalTaxonomyTerm[]
@@ -66,6 +74,7 @@ interface News extends DrupalNode {
 interface Person extends DrupalNode {
   body?: DrupalWysiwyg
   su_person_academic_appt?: string
+  su_person_address?: DrupalWysiwyg
   su_person_admin_appts?: string
   su_person_affiliations?: DrupalLink[]
   su_person_components?: DrupalParagraph[]
@@ -90,58 +99,56 @@ interface Person extends DrupalNode {
   su_person_telephone?: string
   su_person_type_group?: DrupalTaxonomyTerm[]
   su_shared_tags?: DrupalTaxonomyTerm[]
-  su_person_address?: DrupalWysiwyg
 }
 
 interface Publication extends DrupalNode {
+  su_publication_author_ref: DrupalNode[]
+  su_publication_citation: DrupalPublicationCitation
+  su_publication_components: DrupalParagraph[]
+  su_publication_cta: DrupalLink
+  su_publication_image: DrupalImageMedia
+  su_publication_topics: DrupalTaxonomyTerm[]
+  su_shared_tags: DrupalTaxonomyTerm[]
 }
 
 // Paragraph Types.
 interface BannerParagraph extends DrupalParagraph {
-  su_banner_body?: DrupalWysiwyg
-  su_banner_button?: DrupalLink
-  su_banner_header?: string
-  su_banner_image?: DrupalMedia
-  su_banner_sup_header?: string
   behavior_settings?: {
     hero_pattern?: {
       overlay_position?: string
     }
   }
+  su_banner_body?: DrupalWysiwyg
+  su_banner_button?: DrupalLink
+  su_banner_header?: string
+  su_banner_image?: DrupalMedia
+  su_banner_sup_header?: string
 }
 
 interface CardParagraph extends DrupalParagraph {
+  behavior_settings?: object
   su_card_body?: DrupalWysiwyg
   su_card_header?: string
   su_card_link?: DrupalLink
   su_card_link_display?: string
   su_card_media?: DrupalImageMedia | DrupalVideoMedia
   su_card_super_header?: string
-  behavior_settings?: object
 }
 
 interface ImageGalleryParagraph extends DrupalParagraph {
+  behavior_settings?: object
   su_gallery_button?: DrupalLink
   su_gallery_description?: DrupalWysiwyg
   su_gallery_headline?: string
   su_gallery_images: DrupalGalleryImageMedia[]
-  behavior_settings?: object
 }
 
 interface ListParagraph extends DrupalParagraph {
+  behavior_settings?: object
   su_list_button?: DrupalLink
   su_list_description?: DrupalWysiwyg
   su_list_headline?: string
-  su_list_view: {
-    id: string
-    resourceIdObjMeta: {
-      display_id: string
-      drupal_internal__target_id: string
-      arguments?: string
-      items_to_display?: number
-    }
-  }
-  behavior_settings?: object
+  su_list_view: DrupalViewField
 }
 
 interface EntityTeaserParagraph extends DrupalParagraph {
@@ -152,23 +159,15 @@ interface EntityTeaserParagraph extends DrupalParagraph {
 }
 
 interface MediaCaptionParagraph extends DrupalParagraph {
+  behavior_settings?: object
   su_media_caption_caption?: DrupalWysiwyg
   su_media_caption_link?: DrupalLink
   su_media_caption_media?: DrupalMedia
-  behavior_settings?: object
-}
-
-interface TeaserParagraph extends DrupalParagraph {
-  su_entity_button?: DrupalLink
-  su_entity_description?: DrupalWysiwyg
-  su_entity_headline?: string
-  su_entity_item?: DrupalNode[]
-  behavior_settings?: object
 }
 
 interface WysiwygParagraph extends DrupalParagraph {
-  su_wysiwyg_text?: DrupalWysiwyg
   behavior_settings?: object
+  su_wysiwyg_text?: DrupalWysiwyg
 }
 
 // Media Types.
@@ -185,36 +184,89 @@ interface DrupalFileMedia extends DrupalMedia {
 }
 
 interface DrupalGalleryImageMedia extends DrupalMedia {
-  su_gallery_image: DrupalFile
   su_gallery_caption?: string
+  su_gallery_image: DrupalFile
+}
+
+interface DrupalEmbeddableMedia extends DrupalMedia {
+  field_media_embeddable_code?: string
+  field_media_embeddable_oembed?: string
 }
 
 // Field Structures.
 interface DrupalWysiwyg {
-  value: string;
   format: string
   processed: string;
   summary?: string;
+  value: string;
 }
 
 interface DrupalLink {
+  options: object
+  title: string
   uri: string;
   url: string
-  title: string
-  options: object
 }
 
 interface DrupalSmartDate {
-  value: string
-  end_value: string
   duration: string
+  end_value: string
+  rrule?: number
+  rrule_index?: number
+  timezone?: string
+  value: string
 }
 
 interface DrupalAddress {
-  organization: string
-  address_line1: string
-  address_line2: string
-  locality: string
-  postal_code: string
-  administrative_area: string
+  additional_name?: string
+  address_line1?: string
+  address_line2?: string
+  administrative_area?: string
+  country_code?: string
+  family_name?: string
+  given_name?: string
+  locality?: string
+  organization?: string
+  postal_code?: string
+  sorting_code?: string
+}
+
+interface DrupalName {
+  credentials?: string
+  family?: string
+  generational?: string
+  given?: string
+  middle?: string
+  title?: string
+}
+
+interface DrupalViewField  {
+  id: string
+  resourceIdObjMeta: {
+    arguments?: string
+    display_id: string
+    drupal_internal__target_id: string
+    items_to_display?: number
+  }
+}
+
+// Publication Citation entities.
+interface DrupalPublicationCitation extends JsonApiResource {
+  changed: string
+  created: string
+  drupal_internal__id: string
+  su_author?: DrupalName[]
+  su_day?: number
+  su_doi?: string
+  su_edition?: number
+  su_genre?: any
+  su_issue?: string
+  su_month?: number
+  su_page?: string
+  su_publisher?: string
+  su_publisher_place?: string
+  su_subtitle?: string
+  su_url?: DrupalLink
+  su_volume?: string
+  su_year?: number
 }
