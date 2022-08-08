@@ -6,6 +6,5 @@ interface StanfordWysiwygProps {
 }
 
 export function StanfordWysiwyg({paragraph, ...props}: StanfordWysiwygProps) {
-  console.log(paragraph);
   return <div {...props}>{formatHtml(paragraph.su_wysiwyg_text.processed)}</div>
 }

@@ -7,7 +7,7 @@ interface EventSeriesNodeProps {
 }
 
 export const NodeStanfordEventSeries = ({node, ...props}: EventSeriesNodeProps) => {
-  console.log(node);
+
   return (
     <article {...props}>
       <h1>{node.title}</h1>
