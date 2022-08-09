@@ -59,7 +59,7 @@ interface EventSeries extends DrupalNode {
 }
 
 interface News extends DrupalNode {
-  su_news_banner?: DrupalImageMedia
+  su_news_banner?: DrupalImageMedia | DrupalVideoMedia
   su_news_banner_media_caption?: string
   su_news_byline?: string
   su_news_components?: DrupalParagraph[]

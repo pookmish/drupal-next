@@ -3,13 +3,13 @@ import {Banner} from "@/components/patterns/banner";
 
 interface BannerProps {
   paragraph: BannerParagraph
-  fullWidth?: boolean
 }
 
-export const StanfordBanner = ({paragraph, siblingCount, ...props}: BannerProps) => {
+export const StanfordBanner = ({paragraph, ...props}: BannerProps) => {
 
   const imageUrl = paragraph?.su_banner_image?.field_media_image?.uri?.url;
   let image = null
+
   if (imageUrl) {
     image = {
       src: imageUrl,
@@ -27,7 +27,6 @@ export const StanfordBanner = ({paragraph, siblingCount, ...props}: BannerProps)
       body={paragraph?.su_banner_body?.processed}
       link={paragraph?.su_banner_button}
       overlayPosition={paragraph.behavior_settings?.hero_pattern?.overlay_position}
-      fullWidth={siblingCount === 1}
       {...props}
     />
   )

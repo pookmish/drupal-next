@@ -12,7 +12,7 @@ import {
 
 import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
 import {MainLayout} from "@/components/layouts/main-layout";
-import {Node} from "@/nodes/index";
+import {NodePageDisplay} from "@/nodes/index";
 
 interface NodePageProps {
   node: DrupalNode
@@ -27,7 +27,7 @@ export default function NodePage({node, menu, ...props}: NodePageProps) {
         title={node.title + ' | ' + process.env.NEXT_PUBLIC_SITE_NAME}
       />
       <MainLayout menu={menu} {...props}>
-        <Node node={node}/>
+        <NodePageDisplay node={node}/>
       </MainLayout>
     </>
   )

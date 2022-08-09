@@ -1,5 +1,3 @@
-import {DrupalParagraph} from "next-drupal";
-
 import {StanfordWysiwyg} from "@/components/paragraphs/stanford-wysiwyg";
 import {StanfordCard} from "@/components/paragraphs/stanford-card";
 import {StanfordBanner} from "@/components/paragraphs/stanford-banner";
@@ -9,7 +7,7 @@ import {StanfordLists} from "@/components/paragraphs/stanford-lists";
 import {StanfordEntity} from "@/components/paragraphs/stanford-entity";
 
 interface ParagraphProps {
-  paragraph: DrupalParagraph;
+  paragraph: any;
 }
 
 export const Paragraph = ({paragraph, ...props}: ParagraphProps) => {
@@ -24,6 +22,5 @@ export const Paragraph = ({paragraph, ...props}: ParagraphProps) => {
       {paragraph.type === 'paragraph--stanford_lists' && <StanfordLists paragraph={paragraph} {...props}/>}
       {paragraph.type === 'paragraph--stanford_entity' && <StanfordEntity paragraph={paragraph} {...props}/>}
     </div>
-
   );
 }

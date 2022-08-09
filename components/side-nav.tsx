@@ -12,7 +12,7 @@ export const SideNav = ({tree, ...props}: MainMenuProps) => {
   }
 
   return (
-    <ul className="su-list-unstyled" {...props}>
+    <ul className="su-list-unstyled">
       {tree.map(item => <MenuItem key={item.id} {...item}/>)}
     </ul>
   )
@@ -28,8 +28,9 @@ interface MenuItemProps {
 
 export const MenuItem = ({title, url, items, ...props}: MenuItemProps) => {
   return (
-    <li className="su-p-10" {...props}>
+    <li className="su-p-10">
       <DrupalLink href={url}>{title}</DrupalLink>
+
       {typeof items === 'object' &&
           <ul className="su-list-unstyled">
             {items?.map(item => <MenuItem key={item.id} {...item}/>)}

@@ -16,16 +16,15 @@ interface BannerProps {
     title: string
   }
   overlayPosition?: string
-  fullWidth?: boolean
 }
 
-export const Banner = ({image, header, superHeader, body, link, overlayPosition, fullWidth, ...props}: BannerProps) => {
+export const Banner = ({image, header, superHeader, body, link, overlayPosition, ...props}: BannerProps) => {
 
   const hasCardText = header || superHeader || body || link;
 
   return (
     <div
-      className={`hero su-basefont-23 su-relative su-h-full su-mx-auto ${fullWidth ? '' : 'su-max-h-500'}`} {...props}>
+      className={`hero su-basefont-23 su-relative su-h-full su-mx-auto su-max-h-500`} {...props}>
 
       <div className="su-h-full su-w-full su-overflow-hidden su-relative su-max-h-500">
         {image &&

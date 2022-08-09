@@ -1,7 +1,7 @@
 import {EntityTeaserParagraph} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
-import {Node} from "@/nodes/index";
+import {NodeCardDisplay} from "@/nodes/index";
 
 interface EntityTeaserProps {
   paragraph: EntityTeaserParagraph
@@ -16,7 +16,7 @@ export const StanfordEntity = ({paragraph, ...props}: EntityTeaserProps) => {
       <div className="lg:su-grid su-grid-cols-3">
         {paragraph.su_entity_item && paragraph.su_entity_item.map(item =>
           <div key={item.id}>
-            <Node node={item} display="card"/>
+            <NodeCardDisplay node={item}/>
           </div>
         )}
       </div>

@@ -6,5 +6,5 @@ interface StanfordWysiwygProps {
 }
 
 export function StanfordWysiwyg({paragraph, ...props}: StanfordWysiwygProps) {
-  return <div {...props}>{formatHtml(paragraph.su_wysiwyg_text.processed)}</div>
+  return <div {...props}>{formatHtml(paragraph?.su_wysiwyg_text?.processed)}</div>
 }
