@@ -1,27 +1,38 @@
 import {EntityTeaserParagraph} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
-import {DrupalLink} from "@/components/simple/link";
+import {DrupalLinkButton} from "@/components/simple/link";
 import {NodeCardDisplay} from "@/nodes/index";
 
 interface EntityTeaserProps {
   paragraph: EntityTeaserParagraph
+  siblingCount?: number
 }
 
-export const StanfordEntity = ({paragraph, ...props}: EntityTeaserProps) => {
+export const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityTeaserProps) => {
+  const gridColClasses = {
+    1: 'su-grid-cols-1',
+    2: 'su-grid-cols-2',
+    3: 'su-grid-cols-3',
+  }
+  const gridCols = gridColClasses[(paragraph?.su_entity_item?.length ?? 0) % 3];
 
   return (
     <div {...props}>
-      {paragraph.su_entity_headline && <h2>{paragraph.su_entity_headline}</h2>}
+      {paragraph.su_entity_headline && <h2 className={`su-text-center`}>{paragraph.su_entity_headline}</h2>}
       {paragraph.su_entity_description && <div>{formatHtml(paragraph.su_entity_description.processed)}</div>}
-      <div className="lg:su-grid su-grid-cols-3">
-        {paragraph.su_entity_item && paragraph.su_entity_item.map(item =>
-          <div key={item.id}>
-            <NodeCardDisplay node={item}/>
+
+      {paragraph.su_entity_item &&
+          <div className={siblingCount > 0 ? "" : `lg:su-grid ${gridCols}`}>
+            {paragraph.su_entity_item.map(item =>
+              <NodeCardDisplay node={item} key={item.id}/>
+            )}
           </div>
-        )}
-      </div>
+      }
       {paragraph.su_entity_button &&
-          <DrupalLink href={paragraph.su_entity_button.url}>{paragraph.su_entity_button.title}</DrupalLink>}
+          <DrupalLinkButton href={paragraph.su_entity_button.url} className="su-block su-mx-auto">
+            {paragraph.su_entity_button.title}
+          </DrupalLinkButton>
+      }
     </div>
   )
 

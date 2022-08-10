@@ -1,4 +1,3 @@
-import Link from "next/link"
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
 import {DrupalImage} from "@/components/simple/image";
@@ -57,23 +56,22 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) => {
   return (
     <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+      <DrupalLink href={node.path.alias}>
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </DrupalLink>
     </article>
   )
 }
 
 export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
+
   return (
-    <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+    <article className="su-shadow-md su-p-30 su-mb-30" {...props}>
+      <div>Add Image here!</div>
+      <DrupalLink href={node.path.alias} className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black su-text-center">
+        <h2>{node.title}</h2>
+      </DrupalLink>
+      <div className="su-text-center">{node.su_person_short_title}</div>
     </article>
   )
 }

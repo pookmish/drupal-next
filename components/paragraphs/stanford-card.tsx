@@ -3,9 +3,10 @@ import {Card} from "@/components/patterns/card";
 
 interface CardProps {
   paragraph: CardParagraph
+  siblingCount?: number
 }
 
-export const StanfordCard = ({paragraph, ...props}: CardProps) => {
+export const StanfordCard = ({paragraph,siblingCount, ...props}: CardProps) => {
 
   const mediaName = paragraph?.su_card_media?.name;
   const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;

@@ -1,6 +1,6 @@
 import {DrupalMenuLinkContent} from "next-drupal";
 import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
-import {MinusIcon, PlusIcon} from "@heroicons/react/solid";
+import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/solid";
 
 import {DrupalLink} from "@/components/simple/link";
 
@@ -33,18 +33,18 @@ export const MenuItem = ({title, url, parentItemProps, items}: MenuItemProps) =>
 
   return (
     <li className="su-p-10">
-      <DrupalLink href={url}>
+      <DrupalLink href={url} className="su-text-cardinal-red su-no-underline hover:su-underline">
         {title}
       </DrupalLink>
 
       {items?.length > 0 &&
           <>
-              <button {...buttonProps}>
+              <button {...buttonProps} className="su-text-cardinal-red hover:su-underline hover:su-text-black">
                   <span className="su-sr-only">
                     {isOpen ? 'Close' : 'Open'} "{title}" submenu
                   </span>
 
-                {isOpen ? <MinusIcon aria-hidden={true} height={20}/> : <PlusIcon aria-hidden={true} height={20}/>}
+                {isOpen ? <ChevronUpIcon aria-hidden={true} height={20}/> : <ChevronDownIcon  aria-hidden={true} height={20}/>}
               </button>
               <ul
                   className={'su-z-10 su-shadow-lg su-absolute su-list-unstyled su-bg-white ' + (isOpen ? '' : 'su-hidden')}

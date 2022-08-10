@@ -1,7 +1,7 @@
 import {DrupalImage} from "@/components/simple/image";
 import {Oembed} from "@/components/simple/oembed";
 import formatHtml from "@/lib/format-html";
-import {DrupalLink} from "@/components/simple/link";
+import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
 
 interface CardProps {
   video?: {
@@ -27,7 +27,7 @@ export const Card = ({video, image, superHeader, header, body, link, ...props}: 
 
   return (
     <div
-      className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow" {...props}>
+      className="su-mb-20 card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md" {...props}>
 
       {image &&
           <div aria-hidden="true">
@@ -51,10 +51,9 @@ export const Card = ({video, image, superHeader, header, body, link, ...props}: 
             <h3 className="su-leading-display su-font-sans su-font-bold su-type-2 su-mb-03em">{header}</h3>}
         {body && <div>{formatHtml(body)}</div>}
         {link &&
-            <DrupalLink href={link.url}
-                        className="su-cta-button su-font-regular su-leading-display su-block su-w-fit su-no-underline hover:su-underline focus:su-underline su-group su-transition-colors su-px-26 su-pt-10 su-pb-11 su-text-16 md:su-text-20 su-bg-digital-red hocus:su-bg-archway-dark su-text-white hocus:su-text-white su-border-2 su-border-digital-red su-border-solid hover:su-border-black focus:su-border-black su-rs-mt-neg1">
+            <DrupalLinkButton href={link.url}>
               {link.title}
-            </DrupalLink>
+            </DrupalLinkButton>
         }
       </div>
     </div>

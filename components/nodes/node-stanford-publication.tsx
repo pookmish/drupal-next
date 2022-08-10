@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 import {DrupalPublicationCitation, Publication} from "../../types/drupal";
 import {DrupalLink} from "@/components/simple/link";
 import {Row} from "@/components/paragraphs/row";
@@ -16,10 +14,11 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
       )}
       <h1>{node.title}</h1>
 
-      {node.su_publication_components && <Row rows={node.su_publication_components} rowField="su_pubs_components" />}
+      {node.su_publication_components && <Row rows={node.su_publication_components} rowField="su_pubs_components"/>}
 
-      {node.su_publication_citation && <Citation citation={node.su_publication_citation} />}
-      {node.su_publication_cta && <DrupalLink href={node.su_publication_cta.url}>{node.su_publication_cta.title}</DrupalLink>}
+      {node.su_publication_citation && <Citation citation={node.su_publication_citation}/>}
+      {node.su_publication_cta &&
+          <DrupalLink href={node.su_publication_cta.url}>{node.su_publication_cta.title}</DrupalLink>}
     </article>
   )
 }
@@ -27,23 +26,19 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
 export const NodeStanfordPublicationListItem = ({node, ...props}: PublicationNodeProps) => {
   return (
     <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+      <DrupalLink href={node.path.alias}>
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </DrupalLink>
     </article>
   )
 }
 
 export const NodeStanfordPublicationCard = ({node, ...props}: PublicationNodeProps) => {
   return (
-    <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+    <article className="su-shadow-lg" {...props}>
+      <DrupalLink href={node.path.alias} className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </DrupalLink>
     </article>
   )
 }
@@ -56,9 +51,9 @@ const Citation = ({citation}: CitationProps) => {
   return (
     <>
       {citation.su_author && citation.su_author.map((author, index) =>
-      <div key={index}>
-        {author.given} {author.family}
-      </div>
+        <div key={index}>
+          {author.given} {author.family}
+        </div>
       )}
 
       {citation.su_publisher}

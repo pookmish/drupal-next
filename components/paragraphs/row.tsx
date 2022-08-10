@@ -20,7 +20,7 @@ export const Row = ({rows, rowField, ...props}: RowProps) => {
       {rows.map(row =>
         <div key={row.id} className={`lg:su-grid su-gap-xl ${gridClasses[row[rowField].length]}`}>
           {row[rowField].map(paragraph =>
-            <Paragraph paragraph={paragraph} key={paragraph.id}/>
+            <Paragraph paragraph={paragraph} key={paragraph.id} siblingCount={row[rowField].length - 1}/>
           )}
         </div>
       )}

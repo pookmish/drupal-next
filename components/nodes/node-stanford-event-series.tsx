@@ -1,6 +1,6 @@
-import Link from "next/link"
 import {EventSeries} from "../../types/drupal";
 import {Paragraph} from "@/components/paragraphs";
+import {DrupalLink} from "@/components/simple/link";
 
 interface EventSeriesNodeProps {
   node: EventSeries
@@ -22,23 +22,19 @@ export const NodeStanfordEventSeries = ({node, ...props}: EventSeriesNodeProps) 
 export const NodeStanfordEventSeriesListItem = ({node, ...props}: EventSeriesNodeProps) => {
   return (
     <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+      <DrupalLink href={node.path.alias}>
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </DrupalLink>
     </article>
   )
 }
 
 export const NodeStanfordEventSeriesCard = ({node, ...props}: EventSeriesNodeProps) => {
   return (
-    <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+    <article className="su-shadow-lg" {...props}>
+      <DrupalLink href={node.path.alias} className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </DrupalLink>
     </article>
   )
 }

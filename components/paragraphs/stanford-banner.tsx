@@ -3,9 +3,10 @@ import {Banner} from "@/components/patterns/banner";
 
 interface BannerProps {
   paragraph: BannerParagraph
+  siblingCount?: number
 }
 
-export const StanfordBanner = ({paragraph, ...props}: BannerProps) => {
+export const StanfordBanner = ({paragraph, siblingCount, ...props}: BannerProps) => {
 
   const imageUrl = paragraph?.su_banner_image?.field_media_image?.uri?.url;
   let image = null

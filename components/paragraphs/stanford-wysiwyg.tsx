@@ -3,8 +3,9 @@ import {WysiwygParagraph} from "../../types/drupal";
 
 interface StanfordWysiwygProps {
   paragraph: WysiwygParagraph
+  siblingCount?: number
 }
 
-export function StanfordWysiwyg({paragraph, ...props}: StanfordWysiwygProps) {
+export function StanfordWysiwyg({paragraph, siblingCount, ...props}: StanfordWysiwygProps) {
   return <div {...props}>{formatHtml(paragraph?.su_wysiwyg_text?.processed)}</div>
 }

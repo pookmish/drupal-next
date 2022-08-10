@@ -69,6 +69,7 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   }
 
   const type = path.jsonapi.resourceName
+
   const node = await getResourceFromContext<DrupalNode>(type, context)
   const {tree} = await getMenu('main');
   let paragraphs = null

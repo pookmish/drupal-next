@@ -1,14 +1,15 @@
 import {DrupalImage} from "@/components/simple/image";
 import {Oembed} from "@/components/simple/oembed";
-import {DrupalLink} from "@/components/simple/link";
+import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
 import formatHtml from "@/lib/format-html";
 import {MediaCaptionParagraph} from "../../types/drupal";
 
 interface StanfordMediaCaptionProps {
   paragraph: MediaCaptionParagraph
+  siblingCount?: number
 }
 
-export const StanfordMediaCaption = ({paragraph, ...props}:StanfordMediaCaptionProps) => {
+export const StanfordMediaCaption = ({paragraph,siblingCount, ...props}:StanfordMediaCaptionProps) => {
 
   const mediaName = paragraph?.su_media_caption_media?.name;
   const videoUrl = paragraph?.su_media_caption_media?.field_media_oembed_video;
@@ -31,12 +32,9 @@ export const StanfordMediaCaption = ({paragraph, ...props}:StanfordMediaCaptionP
       {videoUrl && <Oembed className="su-object-cover" src={videoUrl} title={mediaName}/>}
 
       {paragraph?.su_media_caption_link &&
-          <DrupalLink
-              href={paragraph?.su_media_caption_link.url}
-              className=""
-          >
+          <DrupalLinkButton href={paragraph?.su_media_caption_link.url} className="su-block su-mx-auto">
             {paragraph?.su_media_caption_link.title}
-          </DrupalLink>}
+          </DrupalLinkButton>}
       {paragraph?.su_media_caption_caption &&
           <figcaption className="">
             {formatHtml(paragraph?.su_media_caption_caption?.processed)}

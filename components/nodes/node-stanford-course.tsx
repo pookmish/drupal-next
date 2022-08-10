@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import {DrupalLink} from "@/components/simple/link";
 import formatHtml from "@/lib/format-html";
 import {Course} from "../../types/drupal";
@@ -34,23 +32,19 @@ export const NodeStanfordCourse = ({node, ...props}: CourseNodeProps) => {
 export const NodeStanfordCourseListItem = ({node, ...props}: CourseNodeProps) => {
   return (
     <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+      <DrupalLink href={node.path.alias}>
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </DrupalLink>
     </article>
   )
 }
 
 export const NodeStanfordCourseCard = ({node, ...props}: CourseNodeProps) => {
   return (
-    <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+    <article className="su-shadow-lg" {...props}>
+      <DrupalLink href={node.path.alias} className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </DrupalLink>
     </article>
   )
 }

@@ -1,20 +1,23 @@
 import {ListParagraph} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
-import {DrupalLink} from "@/components/simple/link";
+import {DrupalLinkButton} from "@/components/simple/link";
 
 interface ListProps {
   paragraph: ListParagraph
+  siblingCount?: number
 }
 
-export const StanfordLists = ({paragraph, ...props}: ListProps) => {
+export const StanfordLists = ({paragraph,siblingCount, ...props}: ListProps) => {
 
   return (
     <div {...props}>
-      {paragraph.su_list_headline && <h2>{paragraph.su_list_headline}</h2>}
+      {paragraph.su_list_headline && <h2 className={`su-text-center`}>{paragraph.su_list_headline}</h2>}
       {paragraph.su_list_description && <div>{formatHtml(paragraph.su_list_description.processed)}</div>}
       <div>List here!</div>
       {paragraph.su_list_button &&
-          <DrupalLink href={paragraph.su_list_button.url}>{paragraph.su_list_button.title}</DrupalLink>}
+          <DrupalLinkButton href={paragraph.su_list_button.url} className="su-block su-mx-auto">
+            {paragraph.su_list_button.title}
+          </DrupalLinkButton>}
     </div>
   )
 

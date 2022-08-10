@@ -1,8 +1,8 @@
-import Link from "next/link"
 import {News} from "../../types/drupal";
 import {DrupalImage} from "@/components/simple/image";
 import {Paragraph} from "@/components/paragraphs";
 import {Oembed} from "@/components/simple/oembed";
+import {DrupalLink} from "@/components/simple/link";
 
 interface NewsNodeProps {
   node: News
@@ -48,24 +48,27 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
 
 export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
   return (
-    <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+    <article className="su-rs-px-2 su-rs-pt-2 su-rs-pb-4" {...props}>
+      <DrupalLink href={node.path.alias} >
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </DrupalLink>
+
     </article>
   )
 }
 
 export const NodeStanfordNewsCard = ({node, ...props}: NewsNodeProps) => {
   return (
-    <article {...props}>
-      <Link href={node.path.alias} passHref>
-        <a>
-          <h2>{node.title}</h2>
-        </a>
-      </Link>
+    <article className="su-shadow-lg su-text-15 su-rs-px-2 su-rs-pt-2 su-rs-pb-4" {...props}>
+      <DrupalLink href={node.path.alias} className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
+        <h2>
+          {node.title}
+        </h2>
+
+        {node.su_news_topics && node.su_news_topics.map(topic =>
+          <div key={topic.id}>{topic.name}</div>
+        )}
+      </DrupalLink>
     </article>
   )
 }

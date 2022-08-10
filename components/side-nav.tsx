@@ -29,7 +29,9 @@ interface MenuItemProps {
 export const MenuItem = ({title, url, items, ...props}: MenuItemProps) => {
   return (
     <li className="su-p-10">
-      <DrupalLink href={url}>{title}</DrupalLink>
+      <DrupalLink href={url} className="su-text-cardinal-red">
+        {title}
+      </DrupalLink>
 
       {typeof items === 'object' &&
           <ul className="su-list-unstyled">

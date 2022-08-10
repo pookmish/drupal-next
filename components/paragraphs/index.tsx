@@ -8,11 +8,12 @@ import {StanfordEntity} from "@/components/paragraphs/stanford-entity";
 
 interface ParagraphProps {
   paragraph: any;
+  siblingCount?: number;
 }
 
-export const Paragraph = ({paragraph, ...props}: ParagraphProps) => {
+export const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
   return (
-    <div {...props}>
+    <>
       {paragraph.type === 'paragraph--stanford_card' && <StanfordCard paragraph={paragraph} {...props}/>}
       {paragraph.type === 'paragraph--stanford_banner' && <StanfordBanner paragraph={paragraph} {...props}/>}
       {paragraph.type === 'paragraph--stanford_gallery' && <StanfordImageGallery paragraph={paragraph} {...props}/>}
@@ -21,6 +22,6 @@ export const Paragraph = ({paragraph, ...props}: ParagraphProps) => {
       {paragraph.type === 'paragraph--stanford_wysiwyg' && <StanfordWysiwyg paragraph={paragraph} {...props}/>}
       {paragraph.type === 'paragraph--stanford_lists' && <StanfordLists paragraph={paragraph} {...props}/>}
       {paragraph.type === 'paragraph--stanford_entity' && <StanfordEntity paragraph={paragraph} {...props}/>}
-    </div>
+    </>
   );
 }
