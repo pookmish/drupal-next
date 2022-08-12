@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 interface MainMenuProps {
   tree: DrupalMenuLinkContent[]
   menuLevel?: number
+  className?: any
 }
 
 export const SideNav = ({tree, menuLevel = 0, ...props}: MainMenuProps) => {

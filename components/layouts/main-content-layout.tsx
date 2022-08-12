@@ -2,7 +2,13 @@ import {useAppContext} from "../../context/state";
 import GetActiveTrail from "@/lib/menu";
 import {SideNav} from "@/components/side-nav";
 
-export const MainContentLayout = ({fulLWidth, ...props}) => {
+interface MainLayoutProps {
+  fullWidth?: boolean;
+  className?: string;
+  children: React.ReactNode;
+}
+
+export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
   const appContext = useAppContext();
 
   const activeTrail = GetActiveTrail(appContext.menu);
@@ -12,7 +18,7 @@ export const MainContentLayout = ({fulLWidth, ...props}) => {
   }
 
   return (
-    <main {...props} className={`${props.className ?? ''} md:su-grid su-grid-cols-4 ${fulLWidth ? '' : 'su-cc'}`}>
+    <main {...props} className={`${props.className ?? ''} md:su-grid su-grid-cols-4 ${fullWidth ? '' : 'su-cc'}`}>
       {subTree &&
           <aside className="su-hidden md:su-block su-col-span-1">
               <SideNav tree={subTree} className="su-sticky su-top-0"/>

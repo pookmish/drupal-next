@@ -22,7 +22,7 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
       }
       {node.su_page_banner && <StanfordBanner paragraph={node.su_page_banner}/>}
 
-      <MainContentLayout fulLWidth={homepage}>
+      <MainContentLayout fullWidth={homepage}>
         <article {...props}>
           {node.su_page_components && <Row rows={node.su_page_components} rowField="su_page_components"/>}
         </article>
