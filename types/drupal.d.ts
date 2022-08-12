@@ -92,7 +92,7 @@ interface Person extends DrupalNode {
   su_person_mobile_phone?: string
   su_person_photo?: DrupalImageMedia
   su_person_profile_link?: DrupalLink
-  su_person_research?: DrupalWysiwyg
+  su_person_research?: DrupalWysiwyg[]
   su_person_research_interests?: string
   su_person_scholarly_interests?: DrupalWysiwyg
   su_person_short_title?: string

@@ -14,17 +14,19 @@ const options: HTMLReactParserOptions = {
         classes = '';
       }
 
-      classes = classes.replace('align-center', 'su-center')
-        .replace('align-left', 'su-block su-float-left')
-        .replace('align-right', 'su-block su-float-right')
-        .replace('su-intro-text', 'su-text-[30px]')
-        .replace('su-drop-cap', 'first-letter:su-text-[35px] first-letter:su-font-bold')
-        .replace('su-font-splash', 'su-text-[46px] su-font-bold')
-        .replace('su-quote-text', `before:su-content-['"'] after:su-content-['"'] su-text-[37px] su-italic`)
-        .replace('su-related-text', 'su-shadow-lg su-p-30')
-        .replace('su-subheading', 'su-text-[25px]')
-        .replace('su-callout-text', 'su-font-bold')
-        .replace(/plain-text|caption/, '')
+      classes = ` ${classes} `;
+      classes = classes.replace(' align-center ', ' su-center ')
+        .replace(' align-left ', ' su-block su-float-left ')
+        .replace(' align-right ', ' su-block su-float-right ')
+        .replace(' text-align-center ', ' su-text-center ')
+        .replace(' su-intro-text ', ' su-text-[30px] ')
+        .replace(' su-drop-cap ', ' first-letter:su-text-[35px] first-letter:su-font-bold ')
+        .replace(' su-font-splash ', ' su-text-[46px] su-font-bold ')
+        .replace(' su-quote-text ', ` before:su-content-['"'] after:su-content-['"'] su-text-[37px] su-italic `)
+        .replace(' su-related-text ', ' su-shadow-lg su-p-30 ')
+        .replace(' su-subheading ', ' su-text-[25px] ')
+        .replace(' su-callout-text ', ' su-font-bold ')
+        .replace(/ plain-text | caption /, ' ')
         .trim();
 
       classes = classes.split(' ')
@@ -37,7 +39,7 @@ const options: HTMLReactParserOptions = {
           if (!href) {
             href = '#';
           }
-          if(classes?.indexOf('su-button--big') > -1) {
+          if (classes?.indexOf('su-button--big') > -1) {
             return (
               <DrupalLinkBigButton href={href} className={classes}>
                 {domToReact(domNode.children, options)}
@@ -53,8 +55,9 @@ const options: HTMLReactParserOptions = {
             )
           }
 
-          if(classes?.indexOf('su-button') > -1) {
-            return <DrupalLinkButton href={href} className={classes}>{domToReact(domNode.children, options)}</DrupalLinkButton>
+          if (classes?.indexOf('su-button') > -1) {
+            return <DrupalLinkButton href={href}
+                                     className={classes}>{domToReact(domNode.children, options)}</DrupalLinkButton>
           }
 
           return (

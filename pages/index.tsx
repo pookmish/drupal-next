@@ -3,7 +3,7 @@ import {NextSeo} from "next-seo";
 import {DrupalMenuLinkContent, DrupalNode, getMenu, getResource} from "next-drupal"
 
 import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
-import {MainLayout} from "@/components/layouts/main-layout"
+import {PageLayout} from "@/components/layouts/page-layout"
 import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
 
 interface HomePageProps {
@@ -17,9 +17,9 @@ const HomePage = ({node, menu, ...props}: HomePageProps) => {
       <NextSeo
         title={process.env.NEXT_SITE_NAME}
       />
-      <MainLayout menu={menu} {...props}>
+      <PageLayout menu={menu} {...props}>
         <NodeStanfordPage node={node} homepage/>
-      </MainLayout>
+      </PageLayout>
     </>
   )
 }

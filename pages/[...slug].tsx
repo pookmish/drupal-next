@@ -1,15 +1,15 @@
 import * as React from "react"
 import {GetStaticPathsResult, GetStaticPropsResult} from "next"
-import {NextSeo} from 'next-seo';
+import {DefaultSeo} from 'next-seo';
 import {
-  DrupalNode, DrupalParagraph,
+  DrupalNode,
   getPathsFromContext,
   getResourceFromContext,
   translatePathFromContext
 } from "next-drupal"
 
 import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
-import {MainLayout} from "@/components/layouts/main-layout";
+import {PageLayout} from "@/components/layouts/page-layout";
 import {NodePageDisplay} from "@/nodes/index";
 
 interface NodePageProps {
@@ -19,12 +19,12 @@ interface NodePageProps {
 export default function NodePage({node, ...props}: NodePageProps) {
   if (!node) return null
   return (<>
-      <NextSeo
+      <DefaultSeo
         title={node.title + ' | ' + process.env.NEXT_PUBLIC_SITE_NAME}
       />
-      <MainLayout {...props}>
+      <PageLayout {...props}>
         <NodePageDisplay node={node}/>
-      </MainLayout>
+      </PageLayout>
     </>
   )
 }
@@ -72,7 +72,7 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   switch (type) {
     case 'node--stanford_page':
 
-      paragraphs = await fetchRowParagraphs<DrupalParagraph>(node.su_page_components, 'su_page_components');
+      paragraphs = await fetchRowParagraphs(node.su_page_components, 'su_page_components');
 
       node?.su_page_components.map((row, i) => {
         row?.su_page_components.map((component, j) => {

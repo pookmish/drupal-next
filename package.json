@@ -7,6 +7,7 @@
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "preview": "next build && next start",
+    "export": "next build && next export",
     "lint": "next lint"
   },
   "dependencies": {

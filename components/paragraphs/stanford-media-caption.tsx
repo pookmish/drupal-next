@@ -1,6 +1,6 @@
 import {DrupalImage} from "@/components/simple/image";
 import {Oembed} from "@/components/simple/oembed";
-import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
+import {DrupalLink} from "@/components/simple/link";
 import formatHtml from "@/lib/format-html";
 import {MediaCaptionParagraph} from "../../types/drupal";
 
@@ -9,36 +9,44 @@ interface StanfordMediaCaptionProps {
   siblingCount?: number
 }
 
-export const StanfordMediaCaption = ({paragraph,siblingCount, ...props}:StanfordMediaCaptionProps) => {
+export const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: StanfordMediaCaptionProps) => {
 
-  const mediaName = paragraph?.su_media_caption_media?.name;
-  const videoUrl = paragraph?.su_media_caption_media?.field_media_oembed_video;
-  const imageUrl = paragraph?.su_media_caption_media?.field_media_image?.uri?.url;
+  const mediaName = paragraph.su_media_caption_media?.name;
+  const videoUrl = paragraph.su_media_caption_media?.field_media_oembed_video;
+  const imageUrl = paragraph.su_media_caption_media?.field_media_image?.uri?.url;
 
   return (
-    <figure {...props}>
+    <figure className="su-text-right" {...props}>
+
       {imageUrl &&
-          <div>
+          <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
               <DrupalImage
-                  className="su-object-cover"
                   src={imageUrl}
-                  alt={paragraph?.su_media_caption_media.field_media_image.resourceIdObjMeta.alt}
-                  height={paragraph?.su_media_caption_media.field_media_image.resourceIdObjMeta.height}
-                  width={paragraph?.su_media_caption_media.field_media_image.resourceIdObjMeta.width}
+                  alt={paragraph.su_media_caption_media.field_media_image.resourceIdObjMeta.alt}
+                  height={paragraph.su_media_caption_media?.field_media_image?.resourceIdObjMeta?.height ?? '400'}
+                  width={paragraph.su_media_caption_media?.field_media_image?.resourceIdObjMeta?.width ?? '800'}
+                  layout="responsive"
               />
           </div>
       }
 
-      {videoUrl && <Oembed className="su-object-cover" src={videoUrl} title={mediaName}/>}
+      {videoUrl &&
+          <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
+              <Oembed className="su-w-full su-h-full" src={videoUrl} title={mediaName}/>
+          </div>
+      }
 
-      {paragraph?.su_media_caption_link &&
-          <DrupalLinkButton href={paragraph?.su_media_caption_link.url} className="su-block su-mx-auto">
-            {paragraph?.su_media_caption_link.title}
-          </DrupalLinkButton>}
-      {paragraph?.su_media_caption_caption &&
+      {paragraph.su_media_caption_link &&
+          <DrupalLink href={paragraph.su_media_caption_link.url} className="su-block su-mx-auto">
+            {paragraph.su_media_caption_link.title}
+          </DrupalLink>
+      }
+
+      {paragraph.su_media_caption_caption &&
           <figcaption className="">
-            {formatHtml(paragraph?.su_media_caption_caption?.processed)}
-          </figcaption>}
+            {formatHtml(paragraph.su_media_caption_caption?.processed)}
+          </figcaption>
+      }
     </figure>
   )
 }
