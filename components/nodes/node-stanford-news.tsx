@@ -58,8 +58,18 @@ export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
 }
 
 export const NodeStanfordNewsCard = ({node, ...props}: NewsNodeProps) => {
+
   return (
     <article className="su-shadow-lg su-text-15 su-rs-px-2 su-rs-pt-2 su-rs-pb-4" {...props}>
+      {node.su_news_featured_media &&
+      <DrupalImage
+      src={node.su_news_featured_media.field_media_image.uri.url}
+      alt={node.su_news_featured_media.field_media_image.resourceIdObjMeta.alt}
+      height={node.su_news_featured_media.field_media_image.resourceIdObjMeta.height}
+      width={node.su_news_featured_media.field_media_image.resourceIdObjMeta.width}
+      />
+      }
+
       <DrupalLink href={node.path.alias} className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
         <h2>
           {node.title}

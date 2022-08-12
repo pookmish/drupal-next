@@ -1,4 +1,4 @@
-import {DrupalParagraph, getResource, getResourceCollection} from "next-drupal";
+import {DrupalParagraph, getResource} from "next-drupal";
 
 export async function fetchParagraphs(components: DrupalParagraph[]) {
   const requests = [];

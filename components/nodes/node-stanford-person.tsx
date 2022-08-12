@@ -1,3 +1,6 @@
+import axios from "axios";
+import {useEffect, useState} from "react";
+
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
 import {DrupalImage} from "@/components/simple/image";
@@ -64,14 +67,27 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
 }
 
 export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
+  const [fullNode, setFullNode] = useState(node);
+
+  useEffect(() => {
+    axios.get(`/api/node/stanford_person/${node.id}`).then(res => setFullNode(res.data));
+  }, [])
 
   return (
     <article className="su-shadow-md su-p-30 su-mb-30" {...props}>
-      <div>Add Image here!</div>
-      <DrupalLink href={node.path.alias} className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black su-text-center">
-        <h2>{node.title}</h2>
+      {fullNode?.su_person_photo?.field_media_image &&
+          <DrupalImage
+              src={fullNode.su_person_photo.field_media_image.uri.url}
+              alt={fullNode.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+              height={fullNode.su_person_photo.field_media_image.resourceIdObjMeta.height}
+              width={fullNode.su_person_photo.field_media_image.resourceIdObjMeta.width}
+          />
+      }
+      <DrupalLink href={fullNode.path.alias}
+                  className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black su-text-center">
+        <h2>{fullNode.title}</h2>
       </DrupalLink>
-      <div className="su-text-center">{node.su_person_short_title}</div>
+      <div className="su-text-center">{fullNode.su_person_short_title}</div>
     </article>
   )
 }

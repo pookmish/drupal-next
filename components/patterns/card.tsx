@@ -1,7 +1,7 @@
 import {DrupalImage} from "@/components/simple/image";
 import {Oembed} from "@/components/simple/oembed";
 import formatHtml from "@/lib/format-html";
-import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
+import {DrupalLinkButton} from "@/components/simple/link";
 
 interface CardProps {
   video?: {
@@ -27,7 +27,7 @@ export const Card = ({video, image, superHeader, header, body, link, ...props}: 
 
   return (
     <div
-      className="su-mb-20 card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md" {...props}>
+      className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md" {...props}>
 
       {image &&
           <div aria-hidden="true">

@@ -11,6 +11,7 @@ export const DrupalImage = ({src, alt= null, width= null, height= null, ...props
       width={`${width}px`}
       height={`${height}px`}
       alt={alt}
+      {...props}
     />
   )
 }

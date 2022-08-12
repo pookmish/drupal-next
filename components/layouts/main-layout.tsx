@@ -5,8 +5,10 @@ import {Lockup} from "@/components/lockup";
 import {MainMenu} from "@/components/main-menu";
 import {SideNav} from "@/components/side-nav";
 import {useRouter} from "next/router";
+import {useAppContext} from "../../context/state";
 
-export const MainLayout = ({menu, ...props}) => {
+export const MainLayout = ({...props}) => {
+  const appContext = useAppContext();
 
   const router = useRouter()
 
@@ -23,7 +25,7 @@ export const MainLayout = ({menu, ...props}) => {
     }
     return false;
   }
-  const sideMenu = findCurrentTreeBranch(menu)
+  const sideMenu = findCurrentTreeBranch(appContext.menu)
 
   return (
     <>
@@ -32,7 +34,7 @@ export const MainLayout = ({menu, ...props}) => {
         <IdentityBar/>
         <header>
           <Lockup/>
-          <MainMenu tree={menu}/>
+          <MainMenu tree={appContext.menu}/>
         </header>
         <main className={`su-flex md:su-flex-row ${sideMenu.items ? 'su-cc' : ''}`}>
           {sideMenu.items && <aside className="su-w-1/4"><SideNav tree={sideMenu.items}/></aside>}

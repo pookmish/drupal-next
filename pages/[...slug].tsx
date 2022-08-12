@@ -2,9 +2,7 @@ import * as React from "react"
 import {GetStaticPathsResult, GetStaticPropsResult} from "next"
 import {NextSeo} from 'next-seo';
 import {
-  DrupalMenuLinkContent,
-  DrupalNode,
-  getMenu,
+  DrupalNode, DrupalParagraph,
   getPathsFromContext,
   getResourceFromContext,
   translatePathFromContext
@@ -16,17 +14,15 @@ import {NodePageDisplay} from "@/nodes/index";
 
 interface NodePageProps {
   node: DrupalNode
-  menu: DrupalMenuLinkContent[]
 }
 
-export default function NodePage({node, menu, ...props}: NodePageProps) {
+export default function NodePage({node, ...props}: NodePageProps) {
   if (!node) return null
-
   return (<>
       <NextSeo
         title={node.title + ' | ' + process.env.NEXT_PUBLIC_SITE_NAME}
       />
-      <MainLayout menu={menu} {...props}>
+      <MainLayout {...props}>
         <NodePageDisplay node={node}/>
       </MainLayout>
     </>
@@ -71,13 +67,12 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   const type = path.jsonapi.resourceName
 
   const node = await getResourceFromContext<DrupalNode>(type, context)
-  const {tree} = await getMenu('main');
   let paragraphs = null
 
   switch (type) {
     case 'node--stanford_page':
 
-      paragraphs = await fetchRowParagraphs(node.su_page_components, 'su_page_components');
+      paragraphs = await fetchRowParagraphs<DrupalParagraph>(node.su_page_components, 'su_page_components');
 
       node?.su_page_components.map((row, i) => {
         row?.su_page_components.map((component, j) => {
@@ -116,8 +111,7 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
 
   return {
     props: {
-      node,
-      menu: tree
+      node
     },
     revalidate: 60 * 5
   }

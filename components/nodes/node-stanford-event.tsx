@@ -1,6 +1,10 @@
 import {DrupalLink} from "@/components/simple/link";
 import {Paragraph} from "@/components/paragraphs";
 import {Event} from "../../types/drupal";
+import {formatDate} from "@/lib/format-date";
+import {CalendarIcon} from "@heroicons/react/outline";
+import {MapIcon} from "@heroicons/react/solid";
+import formatHtml from "@/lib/format-html";
 
 interface EventNodeProps {
   node: Event;
@@ -75,13 +79,40 @@ export const NodeStanfordEventListItem = ({node, ...props}: EventNodeProps) => {
 
 
 export const NodeStanfordEventCard = ({node, ...props}: EventNodeProps) => {
+
+  const date = new Date(node.su_event_date_time.value)
+  const shortMonth = date.toLocaleDateString("en-US", {
+    month: "short",
+  })
+  const day = date.toLocaleDateString("en-US", {
+    day: "numeric",
+  })
+
   return (
-    <article className="su-shadow-lg" {...props}>
-      <DrupalLink href={node.path.alias} className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
+    <article className="su-shadow-md" {...props}>
+      {node.su_event_date_time &&
+          <div className="su-font-bold" aria-hidden={true}>
+              <div className="su-text-[20px]">{shortMonth}</div>
+              <div className="su-text-[40px]">{day}</div>
+          </div>
+      }
+
+      <DrupalLink href={node.path.alias}
+                  className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
         <h2 className="su-text-cardinal-red">{node.title}</h2>
       </DrupalLink>
 
 
+      <div className="su-m-10">
+        <CalendarIcon className="su-float-left su-mr-10" width={21}/>
+        {formatDate(node.su_event_date_time.value)}
+      </div>
+      {node.su_event_alt_loc &&
+          <div className="su-m-10">
+              <MapIcon className="su-float-left su-mr-10" width={21}/>
+            {formatHtml(node.su_event_alt_loc)}
+          </div>
+      }
     </article>
   )
 }
