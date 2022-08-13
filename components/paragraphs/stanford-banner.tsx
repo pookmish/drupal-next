@@ -4,6 +4,7 @@ import {Banner} from "@/components/patterns/banner";
 interface BannerProps {
   paragraph: BannerParagraph
   siblingCount?: number
+  className?: string
 }
 
 export const StanfordBanner = ({paragraph, siblingCount, ...props}: BannerProps) => {

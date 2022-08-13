@@ -8,7 +8,7 @@ import {
   translatePathFromContext
 } from "next-drupal"
 
-import {fetchRowParagraphs} from "@/lib/fetch-paragraphs";
+import {fetchParagraphs, fetchRowParagraphs} from "@/lib/fetch-paragraphs";
 import {PageLayout} from "@/components/layouts/page-layout";
 import {NodePageDisplay} from "@/nodes/index";
 
@@ -84,11 +84,31 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
     case 'node--stanford_publication':
 
       paragraphs = await fetchRowParagraphs(node.su_publication_components, 'su_pubs_components');
-
       node?.su_publication_components.map((row, i) => {
         row?.su_pubs_components.map((component, j) => {
           node.su_publication_components[i].su_pubs_components[j] = paragraphs.find(paragraph => paragraph.id === component.id);
         })
+      })
+      break;
+
+    case 'node--stanford_news':
+      paragraphs = await fetchParagraphs(node.su_news_components);
+      node.su_news_components.map((component, i) => {
+        node.su_news_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
+      })
+      break;
+
+    case 'node--stanford_event':
+      paragraphs = await fetchParagraphs(node.su_event_components);
+      node.su_event_components.map((component, i) => {
+        node.su_event_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
+      })
+      break;
+
+    case 'node--stanford_person':
+      paragraphs = await fetchParagraphs(node.su_person_components);
+      node.su_person_components.map((component, i) => {
+        node.su_person_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
       })
       break;
   }

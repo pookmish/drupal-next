@@ -16,6 +16,7 @@ interface BannerProps {
     title: string
   }
   overlayPosition?: string
+  className?: string
 }
 
 export const Banner = ({image, header, superHeader, body, link, overlayPosition, ...props}: BannerProps) => {
@@ -24,7 +25,8 @@ export const Banner = ({image, header, superHeader, body, link, overlayPosition,
 
   return (
     <div
-      className={`hero su-basefont-23 su-relative su-h-full su-mx-auto su-max-h-500`} {...props}>
+      {...props}
+      className={`hero su-basefont-23 su-relative su-h-full su-mx-auto su-max-h-500 ${props.className}`}>
 
       <div className="su-h-full su-w-full su-overflow-hidden su-relative su-max-h-500">
         {image &&

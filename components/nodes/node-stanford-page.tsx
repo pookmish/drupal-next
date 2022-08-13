@@ -20,10 +20,10 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
               </h1>
           </div>
       }
-      {node.su_page_banner && <StanfordBanner paragraph={node.su_page_banner}/>}
+      {node.su_page_banner && <StanfordBanner className="su-mb-[50px]" paragraph={node.su_page_banner}/>}
 
       <MainContentLayout fullWidth={homepage}>
-        <article {...props}>
+        <article>
           {node.su_page_components && <Row rows={node.su_page_components} rowField="su_page_components"/>}
         </article>
       </MainContentLayout>
@@ -43,7 +43,7 @@ export const NodeStanfordPageListItem = ({node, ...props}: BasicPageNodeProps) =
 
 export const NodeStanfordPageCard = ({node, ...props}: BasicPageNodeProps) => {
   return (
-    <article className="su-shadow-lg" {...props}>
+    <article className="su-shadow-md su-p-[10px]" {...props}>
       <DrupalLink href={node.path.alias}
                   className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
         <h2 className="su-text-cardinal-red">{node.title}</h2>

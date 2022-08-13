@@ -22,13 +22,14 @@ interface CardProps {
     title: string
   }
   linkStyle?: string
+  className?: string
 }
 
 export const Card = ({video, image, superHeader, header, body, link, linkStyle, ...props}: CardProps) => {
 
   return (
-    <div
-      className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md" {...props}>
+    <div {...props}
+         className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md ${props.className ?? ''}`}>
 
       {image &&
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">

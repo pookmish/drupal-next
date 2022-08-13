@@ -80,6 +80,7 @@ const options: HTMLReactParserOptions = {
           return <>{domToReact(domNode.children, options)}</>;
 
         case 'p':
+          classes = classes + ' su-max-w-[100ch]';
         case 'h1':
         case 'h2':
         case 'h3':

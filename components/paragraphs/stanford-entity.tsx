@@ -14,7 +14,9 @@ export const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityTeaser
     2: 'su-grid-cols-2',
     3: 'su-grid-cols-3',
   }
-  const gridCols = gridColClasses[(paragraph?.su_entity_item?.length ?? 0) % 3];
+
+
+  const gridCols = paragraph?.su_entity_item?.length >= 3 ? gridColClasses[3] : gridColClasses[paragraph?.su_entity_item?.length];
 
   return (
     <div {...props}>
@@ -22,7 +24,7 @@ export const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityTeaser
       {paragraph.su_entity_description && <div>{formatHtml(paragraph.su_entity_description.processed)}</div>}
 
       {paragraph.su_entity_item &&
-          <div className={siblingCount > 0 ? "" : `lg:su-grid ${gridCols}`}>
+          <div className={siblingCount > 0 ? "" : `lg:su-grid su-gap-xl ${gridCols}`}>
             {paragraph.su_entity_item.map(item =>
               <NodeCardDisplay node={item} key={item.id}/>
             )}

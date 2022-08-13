@@ -208,7 +208,7 @@ export const NodeStanfordEventCard = ({node, ...props}: EventNodeProps) => {
   })
 
   return (
-    <article className="su-shadow-md" {...props}>
+    <article className="su-shadow-md su-p-[20px]" {...props}>
       {node.su_event_date_time &&
           <div className="su-font-bold" aria-hidden={true}>
               <div className="su-text-[20px]">{shortMonth}</div>
