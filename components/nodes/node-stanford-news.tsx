@@ -17,7 +17,7 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
     <MainContentLayout>
       <NextSeo
         title={node.title}
-        canonical={node.su_news_source.url}
+        canonical={node.su_news_source?.url}
       />
 
 
