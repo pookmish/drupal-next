@@ -11,6 +11,7 @@ import {
 import {fetchParagraphs, fetchRowParagraphs} from "@/lib/fetch-paragraphs";
 import {PageLayout} from "@/components/layouts/page-layout";
 import {NodePageDisplay} from "@/nodes/index";
+import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 
 interface NodePageProps {
   node: DrupalNode
@@ -30,8 +31,13 @@ export default function NodePage({node, ...props}: NodePageProps) {
 }
 
 export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
-  return {
-    paths: await getPathsFromContext([
+  const params = new DrupalJsonApiParams();
+  let fetchMore = true;
+  let page = 0;
+  let pagedPaths, paths = [];
+  while (fetchMore) {
+
+    pagedPaths = await getPathsFromContext([
       'node--stanford_course',
       'node--stanford_event',
       'node--stanford_event_series',
@@ -39,9 +45,25 @@ export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
       'node--stanford_page',
       'node--stanford_person',
       'node--stanford_publication'
-    ], context),
+    ], context, {params: params.getQueryObject()})
+
+    paths = [...paths, ...pagedPaths.map(path => ({params: {slug: path.params.slug}}))]
+
+    params.addPageOffset(page * 50);
+    page++;
+
+    if (process.env.NODE_ENV === 'development' || pagedPaths.length === 0) {
+      fetchMore = false;
+    }
+  }
+
+  return {
+    paths,
     fallback: "blocking",
   }
+}
+
+function getMoreContentPaths(nodeType, context) {
 }
 
 export async function getStaticProps(context): Promise<GetStaticPropsResult<NodePageProps>> {
