@@ -35,27 +35,30 @@ export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
   let fetchMore = true;
   let page = 0;
   let pagedPaths, paths = [];
+
+  // Make sure to fetch all basic pages. We'll fetch other content types later since we can't fetch them all at once.
   while (fetchMore) {
-
-    pagedPaths = await getPathsFromContext([
-      'node--stanford_course',
-      'node--stanford_event',
-      'node--stanford_event_series',
-      'node--stanford_news',
-      'node--stanford_page',
-      'node--stanford_person',
-      'node--stanford_publication'
-    ], context, {params: params.getQueryObject()})
-
-    paths = [...paths, ...pagedPaths.map(path => ({params: {slug: path.params.slug}}))]
+    pagedPaths = await getPathsFromContext(['node--stanford_page'], context, {params: params.getQueryObject()})
+    paths = [...paths, ...pagedPaths]
 
     params.addPageOffset(page * 50);
     page++;
 
+    // Local development environment doesn't need to pre-render all pages. Just build 50 for now.
     if (process.env.NODE_ENV === 'development' || pagedPaths.length === 0) {
       fetchMore = false;
     }
   }
+
+  const otherPaths = await getPathsFromContext([
+    'node--stanford_course',
+    'node--stanford_event',
+    'node--stanford_event_series',
+    'node--stanford_news',
+    'node--stanford_person',
+    'node--stanford_publication'
+  ], context)
+  paths = [...paths, ...otherPaths]
 
   return {
     paths,
