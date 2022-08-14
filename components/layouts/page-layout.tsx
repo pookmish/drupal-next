@@ -16,6 +16,7 @@ export const PageLayout = ({...props}) => {
           <Lockup/>
           <MainMenu/>
         </header>
+
         {props.children}
         <GlobalFooter/>
       </div>

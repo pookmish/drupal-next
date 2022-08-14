@@ -20,12 +20,12 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
   return (
     <main {...props} className={`${props.className ?? ''} md:su-grid su-grid-cols-4 ${fullWidth ? '' : 'su-cc'}`}>
       {subTree &&
-          <aside className="su-hidden md:su-block su-col-span-1">
+          <aside className="su-hidden lg:su-block su-col-span-1">
               <SideNav tree={subTree} className="su-sticky su-top-0"/>
           </aside>
       }
 
-      <section className={`su-col-span-4 ${subTree ? 'md:su-col-span-3' : ''}`}>
+      <section className={`su-col-span-4 ${subTree ? 'lg:su-col-span-3' : ''}`}>
         {props.children}
       </section>
     </main>
