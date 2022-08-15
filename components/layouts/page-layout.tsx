@@ -1,8 +1,7 @@
 import {PreviewAlert} from "@/components/preview-alert"
-import {GlobalFooter} from "@/components/global-footer";
-import {IdentityBar} from "@/components/identity-bar";
-import {Lockup} from "@/components/lockup";
-import {MainMenu} from "@/components/main-menu";
+import {IdentityBar} from "@/components/patterns/identity-bar";
+import {Header} from "@/components/header";
+import {GlobalFooter} from "@/components/patterns/global-footer";
 
 
 export const PageLayout = ({...props}) => {
@@ -12,11 +11,7 @@ export const PageLayout = ({...props}) => {
       <PreviewAlert/>
       <div>
         <IdentityBar/>
-        <header className="su-shadow-lg">
-          <Lockup/>
-          <MainMenu/>
-        </header>
-
+        <Header/>
         {props.children}
         <GlobalFooter/>
       </div>

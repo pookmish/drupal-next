@@ -26,7 +26,7 @@ export const Banner = ({image, header, superHeader, body, link, overlayPosition,
   return (
     <div
       {...props}
-      className={`hero su-basefont-23 su-relative su-h-full su-mx-auto lg:su-max-h-500 ${props.className ?? ''}`}>
+      className={`hero su-basefont-23 su-relative su-h-full su-mx-auto su-w-full lg:su-max-h-500 ${props.className ?? ''}`}>
 
       <div className="su-h-full su-w-full su-overflow-hidden su-relative su-max-h-500">
         {image &&
@@ -35,6 +35,7 @@ export const Banner = ({image, header, superHeader, body, link, overlayPosition,
                 alt={image.alt}
                 height={image.height}
                 width={image.width}
+                layout="responsive"
             />
         }
       </div>

@@ -74,9 +74,9 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
         />
         {inPast && <div>Past Event</div>}
 
-        {node.su_event_type && node.su_event_type.map((type, index) =>
-          <div key={index}>
-            {type.name}
+        {node.su_event_type && node.su_event_type.map(term =>
+          <div key={term.id}>
+            {term.name}
           </div>
         )}
         <h1>{node.title}</h1>
@@ -87,7 +87,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
         {node.su_event_sponsor &&
             <div className="su-mb-[20px]">
               {node.su_event_sponsor.map((sponsor, index) =>
-                <div key={index}>
+                <div key={`event-sponsor-${index}`}>
                   {sponsor}
                 </div>
               )}

@@ -80,7 +80,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
                 <div>
                     <h2>Stanford Affiliations</h2>
                   {node.su_person_affiliations.map((affiliation, index) =>
-                    <DrupalLinkButton key={index} href={affiliation.url}>{affiliation.title}</DrupalLinkButton>
+                    <DrupalLinkButton key={`person-affiliation-${index}`} href={affiliation.url}>{affiliation.title}</DrupalLinkButton>
                   )}
                 </div>
             }

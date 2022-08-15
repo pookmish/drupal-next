@@ -11,8 +11,8 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
   return (
     <MainContentLayout>
       <article {...props}>
-        {node.su_publication_topics && node.su_publication_topics.map((topic, index) =>
-          <div key={index}>{topic.name}</div>
+        {node.su_publication_topics && node.su_publication_topics.map(term=>
+          <div key={term.id}>{term.name}</div>
         )}
         <h1>{node.title}</h1>
 
@@ -55,7 +55,7 @@ const Citation = ({citation}: CitationProps) => {
   return (
     <>
       {citation.su_author && citation.su_author.map((author, index) =>
-        <div key={index}>
+        <div key={`citation-author-${index}`}>
           {author.given} {author.family}
         </div>
       )}

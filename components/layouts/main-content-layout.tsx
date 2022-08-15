@@ -1,6 +1,6 @@
 import {useAppContext} from "../../context/state";
 import GetActiveTrail from "@/lib/menu";
-import {SideNav} from "@/components/side-nav";
+import {SideNav} from "@/components/menu/side-nav";
 
 interface MainLayoutProps {
   fullWidth?: boolean;

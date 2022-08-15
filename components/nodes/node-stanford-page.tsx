@@ -3,6 +3,7 @@ import {StanfordBanner} from "@/components/paragraphs/stanford-banner";
 import {Row} from "@/components/paragraphs/row";
 import {DrupalLink} from "@/components/simple/link";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
+import {NextSeo} from "next-seo";
 
 interface BasicPageNodeProps {
   node: BasicPage
@@ -13,6 +14,9 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
 
   return (
     <>
+      <NextSeo
+        description={node.su_page_description}
+      />
       {!homepage &&
           <div className="su-cc">
               <h1 className={`su-mt-[50px] ${node.su_page_banner ? 'su-sr-only' : ''}`}>

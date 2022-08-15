@@ -15,13 +15,12 @@ export const StanfordImageGallery = ({paragraph, siblingCount, ...props}: Stanfo
       {paragraph.su_gallery_headline && <h2 className={`su-text-center`}>{paragraph.su_gallery_headline}</h2>}
       {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description.processed)}</div>}
       <div className="lg:su-grid su-grid-cols-3 su-gap-xl">
-        {paragraph.su_gallery_images.map((image, index) =>
-          <figure key={index}>
+        {paragraph.su_gallery_images.map(image =>
+          <figure key={image.id}>
 
             <DrupalLink href={image.su_gallery_image.uri.url}
                         className="su-block su-h-[200px] su-overflow-hidden">
               <DrupalImage
-                key={index}
                 src={image.su_gallery_image.uri.url}
                 alt={image.su_gallery_image.resourceIdObjMeta.alt}
                 height={image.su_gallery_image.resourceIdObjMeta.height}

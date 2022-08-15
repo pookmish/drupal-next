@@ -2,7 +2,7 @@ import * as React from "react"
 import {GetStaticPathsResult, GetStaticPropsResult} from "next"
 import {DefaultSeo} from 'next-seo';
 import {
-  DrupalNode,
+  DrupalNode, DrupalParagraph,
   getPathsFromContext,
   getResourceFromContext,
   translatePathFromContext
@@ -50,23 +50,10 @@ export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
     }
   }
 
-  const otherPaths = await getPathsFromContext([
-    'node--stanford_course',
-    'node--stanford_event',
-    'node--stanford_event_series',
-    'node--stanford_news',
-    'node--stanford_person',
-    'node--stanford_publication'
-  ], context)
-  paths = [...paths, ...otherPaths]
-
   return {
     paths,
     fallback: "blocking",
   }
-}
-
-function getMoreContentPaths(nodeType, context) {
 }
 
 export async function getStaticProps(context): Promise<GetStaticPropsResult<NodePageProps>> {
@@ -92,13 +79,19 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   const type = path.jsonapi.resourceName
 
   const node = await getResourceFromContext<DrupalNode>(type, context)
+  // At this point, we know the path exists and it points to a resource.
+  // If we receive an error, it means something went wrong on the Drupal.
+  // We throw an error to tell revalidation to skip this for now.
+  // Revalidation can try again on next request.
+  if (!node) {
+    throw new Error(`Failed to fetch resource: ${path.jsonapi.individual}`)
+  }
+
   let paragraphs = null
 
   switch (type) {
     case 'node--stanford_page':
-
       paragraphs = await fetchRowParagraphs(node.su_page_components, 'su_page_components');
-
       node?.su_page_components.map((row, i) => {
         row?.su_page_components.map((component, j) => {
           node.su_page_components[i].su_page_components[j] = paragraphs.find(paragraph => paragraph.id === component.id);
@@ -136,14 +129,13 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
         node.su_person_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
       })
       break;
-  }
 
-  // At this point, we know the path exists and it points to a resource.
-  // If we receive an error, it means something went wrong on the Drupal.
-  // We throw an error to tell revalidation to skip this for now.
-  // Revalidation can try again on next request.
-  if (!node) {
-    throw new Error(`Failed to fetch resource: ${path.jsonapi.individual}`)
+    case 'node--event_series':
+      paragraphs = await fetchParagraphs(node.su_event_series_components);
+      node.su_event_series_components.map((component, i) => {
+        node.su_event_series_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
+      })
+      break;
   }
 
   // If we're not in preview mode and the resource is not published,
@@ -154,10 +146,29 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
     }
   }
 
+  cleanNode(node);
   return {
     props: {
       node
     },
     revalidate: 60 * 5
   }
+}
+
+export const cleanNode = (node: DrupalNode) => {
+  delete node.sticky;
+  delete node.promote;
+  delete node.links;
+  delete node.node_type;
+  delete node.path;
+  delete node.metatag;
+  delete node.revision_log;
+  delete node.revision_timestamp;
+  delete node.revision_uid;
+  delete node.uid;
+  delete node.stanford_intranet__access;
+  delete node.relationshipNames;
+  delete node.publish_on;
+  delete node.drupal_internal_vid;
+  delete node.unpublish_on;
 }

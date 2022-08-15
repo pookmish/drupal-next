@@ -3,7 +3,7 @@ import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
 import {ChevronDownIcon, ChevronUpIcon, MenuIcon} from "@heroicons/react/solid";
 
 import {DrupalLink} from "@/components/simple/link";
-import {useAppContext} from "../context/state";
+import {useAppContext} from "../../context/state";
 import GetActiveTrail from "@/lib/menu";
 import {useState} from "react";
 
@@ -50,7 +50,7 @@ export const MenuItem = ({title, url, items, active, menuLevel = 0}: MenuItemPro
   return (
     <li className="su-p-10">
       <DrupalLink href={url}
-                  className={`su-text-white lg:su-text-cardinal-red su-no-underline su-pb-[10px] hover:su-underline ${active ? 'su-text-black hover:su-text-cardinal-red su-border-b-[6px] su-border-[#2e2d29]' : ''}`}>
+                  className={`su-text-white lg:su-text-cardinal-red su-no-underline su-pb-[10px] hover:su-underline ${active ? 'su-text-white lg:su-text-black hover:su-text-cardinal-red su-border-b-[6px] su-border-[#2e2d29]' : ''}`}>
         {title}
       </DrupalLink>
 

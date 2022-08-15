@@ -1,5 +1,5 @@
 import {GetStaticPropsResult} from "next"
-import {NextSeo} from "next-seo";
+import {DefaultSeo, NextSeo} from "next-seo";
 import {DrupalMenuLinkContent, DrupalNode, getMenu, getResource} from "next-drupal"
 
 import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
@@ -14,10 +14,11 @@ interface HomePageProps {
 const HomePage = ({node, menu, ...props}: HomePageProps) => {
   return (
     <>
-      <NextSeo
-        title={process.env.NEXT_SITE_NAME}
+      <DefaultSeo
+        title={process.env.NEXT_PUBLIC_SITE_NAME}
       />
       <PageLayout menu={menu} {...props}>
+        <h1 className="su-hidden">{process.env.NEXT_PUBLIC_SITE_NAME}</h1>
         <NodeStanfordPage node={node} homepage/>
       </PageLayout>
     </>
