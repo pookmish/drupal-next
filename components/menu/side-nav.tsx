@@ -1,7 +1,7 @@
+import {useRouter} from "next/router";
 import {DrupalMenuLinkContent} from "next-drupal";
 
 import {DrupalLink} from "@/components/simple/link";
-import {useRouter} from "next/router";
 
 interface MainMenuProps {
   tree: DrupalMenuLinkContent[]

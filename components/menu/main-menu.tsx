@@ -11,7 +11,6 @@ import {useState} from "react";
 export const MainMenu = ({...props}) => {
   const appContext = useAppContext();
   const activeTrail = GetActiveTrail(appContext.menu);
-
   const [menuOpen, setMenuOpen] = useState(false)
 
   if (typeof appContext.menu === 'undefined') {

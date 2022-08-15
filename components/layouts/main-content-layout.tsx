@@ -1,6 +1,7 @@
 import {useAppContext} from "../../context/state";
 import GetActiveTrail from "@/lib/menu";
 import {SideNav} from "@/components/menu/side-nav";
+import {DrupalMenuLinkContent} from "next-drupal";
 
 interface MainLayoutProps {
   fullWidth?: boolean;
@@ -13,8 +14,21 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
 
   const activeTrail = GetActiveTrail(appContext.menu);
   let subTree;
+
+  const cleanSubMenu = (menu: DrupalMenuLinkContent[], activeTrail: number[]) => {
+    menu.map((menuItem, i) => {
+      if (i !== activeTrail[0]) {
+        delete menuItem.items;
+      } else {
+        cleanSubMenu(menuItem.items ?? [], activeTrail.slice(1));
+      }
+    });
+  }
+
+
   if (activeTrail.length >= 1) {
     subTree = appContext.menu[activeTrail[0]]?.items;
+    cleanSubMenu(subTree ?? [], activeTrail.slice(1));
   }
 
   return (
