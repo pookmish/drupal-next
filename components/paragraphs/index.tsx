@@ -5,6 +5,7 @@ import {StanfordImageGallery} from "@/components/paragraphs/stanford-image-galle
 import {StanfordMediaCaption} from "@/components/paragraphs/stanford-media-caption";
 import {StanfordLists} from "@/components/paragraphs/stanford-lists";
 import {StanfordEntity} from "@/components/paragraphs/stanford-entity";
+import {StanfordSpacer} from "@/components/paragraphs/stanford-spacer";
 
 interface ParagraphProps {
   paragraph: any;
@@ -14,14 +15,22 @@ interface ParagraphProps {
 export const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
   return (
     <>
-      {paragraph.type === 'paragraph--stanford_card' && <StanfordCard paragraph={paragraph} {...props}/>}
-      {paragraph.type === 'paragraph--stanford_banner' && <StanfordBanner paragraph={paragraph} {...props}/>}
-      {paragraph.type === 'paragraph--stanford_gallery' && <StanfordImageGallery paragraph={paragraph} {...props}/>}
+      {paragraph.type === 'paragraph--stanford_card' &&
+          <StanfordCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+      {paragraph.type === 'paragraph--stanford_banner' &&
+          <StanfordBanner paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+      {paragraph.type === 'paragraph--stanford_gallery' &&
+          <StanfordImageGallery paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
       {paragraph.type === 'paragraph--stanford_media_caption' &&
-          <StanfordMediaCaption paragraph={paragraph} {...props}/>}
-      {paragraph.type === 'paragraph--stanford_wysiwyg' && <StanfordWysiwyg paragraph={paragraph} {...props}/>}
-      {paragraph.type === 'paragraph--stanford_lists' && <StanfordLists paragraph={paragraph} {...props}/>}
-      {paragraph.type === 'paragraph--stanford_entity' && <StanfordEntity paragraph={paragraph} {...props}/>}
+          <StanfordMediaCaption paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+      {paragraph.type === 'paragraph--stanford_wysiwyg' &&
+          <StanfordWysiwyg paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+      {paragraph.type === 'paragraph--stanford_lists' &&
+          <StanfordLists paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+      {paragraph.type === 'paragraph--stanford_entity' &&
+          <StanfordEntity paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+      {paragraph.type === 'paragraph--stanford_spacer' &&
+          <StanfordSpacer paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
     </>
   );
 }
