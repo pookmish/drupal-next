@@ -30,19 +30,19 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
   };
 
   const gridClass = siblingCount >= 1 ? gridClasses[1] : (itemsToDisplay?.length > 3 ? gridClasses[3] : gridClasses[itemsToDisplay?.length]);
-
+  const isList = useListDisplay(paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id, paragraph.su_list_view.resourceIdObjMeta.display_id);
   return (
     <div {...props}>
       {paragraph.su_list_headline && <h2 className={`su-text-center`}>{paragraph.su_list_headline}</h2>}
       {paragraph.su_list_description && <div>{formatHtml(paragraph.su_list_description.processed)}</div>}
 
-      <div className={`lg:su-grid su-gap-[50px] ${gridClass}`}>
+      <div className={`${isList ? '' : 'lg:su-grid'} su-gap-[50px] ${gridClass}`}>
         {itemsToDisplay?.map(item => (
           <ListItem
             key={item.id}
             node={item}
             viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
-            viewDisplayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
+            displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
           />
         ))}
       </div>
@@ -53,33 +53,32 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
           </DrupalLinkButton>}
     </div>
   )
+}
 
+const useListDisplay = (viewId, displayId) => {
+  const display = `${viewId}:${displayId}`
+  const listDisplays = [
+    'stanford_events:list_page',
+    'stanford_news:block_1',
+    'stanford_publications:chicago_list',
+    'stanford_publications:apa_list',
+    'stanford_basic_pages:basic_page_type_list',
+    'stanford_courses:default_list_viewfield_block',
+  ];
+  return listDisplays.indexOf(display) > -1;
 }
 
 interface ListItemProps {
   node: DrupalNode
   viewId: string
-  viewDisplayId: string
+  displayId: string
 }
 
-const ListItem = ({node, viewId, viewDisplayId}: ListItemProps) => {
-  const display = `${viewId}:${viewDisplayId}`
+const ListItem = ({node, viewId, displayId}: ListItemProps) => {
 
-  switch (display) {
-    case 'stanford_events:cards':
-    case 'stanford_news:vertical_cards':
-    case 'stanford_person:grid_list_all':
-    case 'stanford_events:past_events_list_block':
-    case 'stanford_shared_tags:card_grid':
-    case 'stanford_basic_pages:viewfield_block_1':
-    case 'stanford_courses:vertical_teaser_viewfield_block':
-      return <NodeCardDisplay node={node}/>
-    case 'stanford_events:list_page':
-    case 'stanford_news:block_1':
-    case 'stanford_publications:chicago_list':
-    case 'stanford_publications:apa_list':
-    case 'stanford_basic_pages:basic_page_type_list':
-    case 'stanford_courses:default_list_viewfield_block':
-      return <NodeListDisplay node={node}/>
+  const isList = useListDisplay(viewId, displayId);
+  if (isList) {
+    return <NodeListDisplay node={node}/>
   }
+  return <NodeCardDisplay node={node}/>
 }
