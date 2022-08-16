@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       url += `?page[limit]=${itemsToDisplay}`
     }
   }
-  
+
   const items = await axios.get(url)
     .then(({data}) => {
       const dataFormatter = new Jsona()

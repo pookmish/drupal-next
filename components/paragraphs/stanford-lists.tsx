@@ -30,7 +30,8 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
   };
 
   const gridClass = siblingCount >= 1 ? gridClasses[1] : (itemsToDisplay?.length > 3 ? gridClasses[3] : gridClasses[itemsToDisplay?.length]);
-  const isList = useListDisplay(paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id, paragraph.su_list_view.resourceIdObjMeta.display_id);
+  const isList = useListDisplay(paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id, paragraph.su_list_view?.resourceIdObjMeta?.display_id);
+
   return (
     <div {...props}>
       {paragraph.su_list_headline && <h2 className={`su-text-center`}>{paragraph.su_list_headline}</h2>}
